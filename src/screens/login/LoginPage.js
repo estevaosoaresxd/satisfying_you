@@ -1,7 +1,6 @@
 
 import React from 'react';
 import {
-
   StyleSheet,
   Text,
   useColorScheme,
@@ -12,9 +11,13 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
+import Icon from 'react-native-vector-icons/MaterialIcons';
+
+
 
 const LoginPage = () => {
   const isDarkMode = useColorScheme() === 'dark';
+
 
   return (
     <View style={styles.sectionContainer}>
@@ -27,6 +30,7 @@ const LoginPage = () => {
         ]}>
         Satisfying.you
       </Text>
+      <Icon name="sentiment-satisfied-alt" size={60} color="black" />
       <Text
         style={[
           styles.sectionDescription,
@@ -58,5 +62,6 @@ const styles = StyleSheet.create({
     fontWeight: '700',
   },
 });
+
 
 export default LoginPage;
