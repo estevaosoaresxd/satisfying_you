@@ -1,17 +1,57 @@
 import React from 'react';
-
+import {StyleSheet, View} from 'react-native';
 import {Row} from '../../components/Row';
-import {Text} from 'react-native';
 import {Container} from '../../components/Container';
+import {InputValidator} from '../../components/InputValidator';
+import Icon from 'react-native-vector-icons/MaterialIcons';
+import {TextDefault} from '../../components/TextDefault';
+import {ButtonDefault} from '../../components/ButtonDefault';
+import {Column} from '../../components/Column';
 
-export const LoginPage = () => {
+const LoginPage = () => {
   return (
-    <Container>
+    <Container style={styles.container}>
       <Row>
-        <Text></Text> <Icon />
+        <TextDefault style={styles.title}>Satisfying</TextDefault>
+        <View style={{width: 30}}></View>
+        <Icon name="sentiment-satisfied-alt" size={50} color="white" />
       </Row>
-      <InputValidator></InputValidator>
-      <InputValidator></InputValidator>
+      <InputValidator text="E-mail"></InputValidator>
+      <InputValidator text="Senha" isPassword={true}></InputValidator>
+      <ButtonDefault text="Entrar" style={styles.buttonLogin} />
+      <Column>
+        <ButtonDefault text="Criar minha conta" style={styles.buttonForgot} />
+        <View style={{height: 5}}></View>
+        <ButtonDefault
+          text="Esqueci minha senha"
+          style={styles.buttonRegister}
+        />
+      </Column>
     </Container>
   );
 };
+
+const styles = StyleSheet.create({
+  title: {
+    fontSize: 50,
+    color: 'white',
+  },
+  container: {
+    paddingHorizontal: '15%',
+    paddingVertical: '2%',
+  },
+  buttonLogin: {
+    backgroundColor: '#37BD6D',
+    paddingVertical: 10,
+  },
+  buttonForgot: {
+    backgroundColor: '#B0CCDE',
+    paddingVertical: 3,
+  },
+  buttonRegister: {
+    backgroundColor: '#419ED7',
+    paddingVertical: 3,
+  },
+});
+
+export {LoginPage};

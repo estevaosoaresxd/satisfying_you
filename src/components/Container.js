@@ -1,15 +1,22 @@
 import {StyleSheet, SafeAreaView} from 'react-native';
 
-export const Container = ({children}) => {
-  return <SafeAreaView style={styles.container}>{children}</SafeAreaView>;
+const Container = ({children, style}) => {
+  return (
+    <SafeAreaView style={{...styles.container, ...style}}>
+      {children}
+    </SafeAreaView>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     flex: 1,
+    alignItems: 'stretch',
     backgroundColor: '#372775',
+    fontFamily: 'AveriaLibre-Regular',
   },
 });
+
+export {Container};

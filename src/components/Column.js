@@ -1,7 +1,7 @@
 import {StyleSheet, View} from 'react-native';
 
-export const Column = ({children}) => {
-  return <View style={styles.column}>{children}</View>;
+const Column = ({children, style}) => {
+  return <View style={{...styles.column, ...style}}>{children}</View>;
 };
 
 const styles = StyleSheet.create({
@@ -9,3 +9,5 @@ const styles = StyleSheet.create({
     flexDirection: 'column',
   },
 });
+
+export {Column};
