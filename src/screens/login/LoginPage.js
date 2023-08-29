@@ -21,7 +21,7 @@ const LoginPage = ({navigation}) => {
       <ButtonDefault
         text="Entrar"
         style={styles.buttonLogin}
-        onTap={() => navigation.navigate('home', {name: 'Jane'})}
+        onTap={() => navigation.navigate('home')}
       />
       <Column>
         <ButtonDefault text="Criar minha conta" style={styles.buttonForgot} />
