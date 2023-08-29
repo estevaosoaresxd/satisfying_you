@@ -8,7 +8,7 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 
-const LoginPage = () => {
+const LoginPage = ({navigation}) => {
   return (
     <Container style={styles.container}>
       <Row>
@@ -18,7 +18,11 @@ const LoginPage = () => {
       </Row>
       <InputValidator text="E-mail"></InputValidator>
       <InputValidator text="Senha" isPassword={true}></InputValidator>
-      <ButtonDefault text="Entrar" style={styles.buttonLogin} />
+      <ButtonDefault
+        text="Entrar"
+        style={styles.buttonLogin}
+        onTap={() => navigation.navigate('home', {name: 'Jane'})}
+      />
       <Column>
         <ButtonDefault text="Criar minha conta" style={styles.buttonForgot} />
         <View style={{height: 5}}></View>
