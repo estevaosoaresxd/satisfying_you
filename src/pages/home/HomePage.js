@@ -4,7 +4,6 @@ import {StyleSheet, View, FlatList} from 'react-native';
 // COMPONENTS
 import {Container} from '../../components/Container';
 import {ButtonDefault} from '../../components/ButtonDefault';
-import {IconButton} from '../../components/IconButton';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
 
@@ -43,13 +42,6 @@ const DATA = [
 ];
 
 const HomePage = ({navigation, route}) => {
-  React.useEffect(() => {
-    navigation.setOptions({
-      headerBackButtonMenuEnabled: false,
-      headerLeft: () => <IconButton icon="menu" onTap={() => {}} />,
-    });
-  }, [navigation]);
-
   const renderItem = ({icon, title, description, isOutline, iconColor}) => (
     <SquareButton
       icon={icon}

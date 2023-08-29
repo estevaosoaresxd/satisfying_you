@@ -25,7 +25,7 @@ const LoginPage = ({navigation}) => {
         <ButtonDefault
           text="Entrar"
           style={styles.buttonLogin}
-          onTap={() => navigation.navigate('home')}
+          onTap={() => navigation.navigate('drawer-home')}
         />
       </Column>
 
