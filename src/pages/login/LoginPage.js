@@ -16,13 +16,19 @@ const LoginPage = ({navigation}) => {
         <View style={{width: 30}}></View>
         <Icon name="sentiment-satisfied-alt" size={50} color="white" />
       </Row>
-      <InputValidator text="E-mail"></InputValidator>
-      <InputValidator text="Senha" isPassword={true}></InputValidator>
-      <ButtonDefault
-        text="Entrar"
-        style={styles.buttonLogin}
-        onTap={() => navigation.navigate('home')}
-      />
+
+      <Column>
+        <InputValidator text="E-mail"></InputValidator>
+        <View style={{height: 10}}></View>
+        <InputValidator text="Senha" isPassword={true}></InputValidator>
+        <View style={{height: 15}}></View>
+        <ButtonDefault
+          text="Entrar"
+          style={styles.buttonLogin}
+          onTap={() => navigation.navigate('home')}
+        />
+      </Column>
+
       <Column>
         <ButtonDefault text="Criar minha conta" style={styles.buttonForgot} />
         <View style={{height: 5}}></View>
@@ -42,7 +48,7 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: '15%',
-    paddingVertical: '2%',
+    paddingVertical: '1%',
   },
   buttonLogin: {
     backgroundColor: '#37BD6D',

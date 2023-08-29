@@ -8,9 +8,6 @@ import {IconButton} from '../../components/IconButton';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
 
-import {createDrawerNavigator} from '@react-navigation/drawer';
-import {NavigationContainer} from '@react-navigation/native';
-
 const DATA = [
   {
     icon: 'devices',
