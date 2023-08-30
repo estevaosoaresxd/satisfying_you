@@ -14,16 +14,22 @@ import {ModifySearchPage} from '../pages/modify_search/ModifySearchPage';
 import {ActionsSearchPage} from '../pages/actions_search/ActionsSearchPage';
 import {SatisfyingCollectPage} from '../pages/satisfying_collect/SatisfyingCollectPage';
 import {CustomDrawerComp} from '../pages/home/components/Drawer';
+import {ChartReportPage} from '../pages/chart_report/ChartReportPage';
 
 const Stack = createNativeStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const navigationOptions = () => ({
-  headerTintColor: 'white',
+  headerTintColor: '#573FBA',
   headerStyle: {
     backgroundColor: '#2B1D62',
   },
-  headerTitle: '',
+  headerTitle: null,
+  headerTitleStyle: {
+    color: 'white',
+    fontFamily: 'AveriaLibre-Regular',
+    fontSize: 22,
+  },
 });
 
 const drawerOptions = () => ({
@@ -88,7 +94,7 @@ export const Router = () => {
         />
         <Stack.Screen
           name="chart-report"
-          component={SatisfyingCollectPage}
+          component={ChartReportPage}
           options={navigationOptions}
         />
       </Stack.Navigator>

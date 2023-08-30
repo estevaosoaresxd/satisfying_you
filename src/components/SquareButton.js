@@ -29,9 +29,11 @@ const SquareButton = ({
         <TextDefault style={{...styles.title, ...styleTitle}}>
           {title}
         </TextDefault>
-        <TextDefault style={{...styles.description, ...styleDescription}}>
-          {description}
-        </TextDefault>
+        {description != undefined && (
+          <TextDefault style={{...styles.description, ...styleDescription}}>
+            {description}
+          </TextDefault>
+        )}
       </TouchableOpacity>
     </Column>
   );

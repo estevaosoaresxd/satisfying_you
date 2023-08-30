@@ -46,6 +46,7 @@ const HomePage = ({navigation, route}) => {
     <SquareButton
       icon={icon}
       title={title}
+      onTap={() => navigation.navigate('actions-search')}
       isOutline={isOutline}
       description={description}
       styleButton={styles.flatlist.button}
