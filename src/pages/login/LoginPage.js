@@ -21,7 +21,11 @@ const LoginPage = ({navigation}) => {
         <InputValidator text="E-mail"></InputValidator>
         <View style={{height: 10}}></View>
         <InputValidator text="Senha" isPassword={true}></InputValidator>
+        <TextDefault style={styles.error}>
+          E-mail e/ ou senha inválidos
+        </TextDefault>
         <View style={{height: 15}}></View>
+
         <ButtonDefault
           text="Entrar"
           style={styles.buttonLogin}
@@ -45,6 +49,9 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 50,
     color: 'white',
+  },
+  error: {
+    color: '#FD7979',
   },
   container: {
     paddingHorizontal: '15%',
