@@ -5,9 +5,11 @@ import {Row} from '../../components/Row';
 import {SquareButton} from '../../components/SquareButton';
 
 const ActionsSearchPage = ({navigation, route}) => {
+  const {title} = route.params;
+
   React.useEffect(() => {
     navigation.setOptions({
-      title: 'Carnaval',
+      title: title ?? 'Sem título',
     });
   }, [navigation]);
 
@@ -20,7 +22,11 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
-          onTap={() => navigation.navigate('modify-search')}
+          onTap={() =>
+            navigation.navigate('modify-search', {
+              type: 'UPDATE',
+            })
+          }
         />
         <SquareButton
           icon="library-add-check"

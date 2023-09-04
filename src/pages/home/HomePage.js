@@ -6,6 +6,7 @@ import {Container} from '../../components/Container';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
+import {AlertConfirm} from '../../components/AlertConfirm';
 
 const DATA = [
   {
@@ -46,7 +47,11 @@ const HomePage = ({navigation, route}) => {
     <SquareButton
       icon={icon}
       title={title}
-      onTap={() => navigation.navigate('actions-search')}
+      onTap={() =>
+        navigation.navigate('actions-search', {
+          title: title,
+        })
+      }
       isOutline={isOutline}
       description={description}
       styleButton={styles.flatlist.button}
@@ -81,7 +86,16 @@ const HomePage = ({navigation, route}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.flatlist.content}
       />
-      <ButtonDefault text="NOVA PESQUISA" style={styles.buttonNewSearch} />
+      <AlertConfirm showAlert={false} />
+      <ButtonDefault
+        text="NOVA PESQUISA"
+        style={styles.buttonNewSearch}
+        onTap={() =>
+          navigation.navigate('modify-search', {
+            type: 'NEW',
+          })
+        }
+      />
     </Container>
   );
 };
