@@ -1,5 +1,5 @@
-import React from 'react';
-import {StyleSheet, View, FlatList} from 'react-native';
+import React, {useState} from 'react';
+import {StyleSheet, View, FlatList, Modal, Text, Button} from 'react-native';
 import baseSvg from './../../../assets/svg/celebration.svg';
 
 // COMPONENTS
@@ -8,6 +8,7 @@ import {ButtonDefault} from '../../components/ButtonDefault';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
+import {Column} from '../../components/Column';
 
 const DATA = [
   {
@@ -81,12 +82,15 @@ const HomePage = ({navigation, route}) => {
     />
   );
 
+  const [modalVisible, setModalVisible] = useState(false);
+
   return (
     <Container style={styles.container}>
       <InputSearch
         placeholder="Insira o termo de busca..."
         styleRow={styles.inputSearch}
       />
+      <AlertConfirm setShowAlert={setModalVisible} showAlert={modalVisible} />
       <FlatList
         horizontal={true}
         data={DATA}
@@ -101,11 +105,7 @@ const HomePage = ({navigation, route}) => {
       <ButtonDefault
         text="NOVA PESQUISA"
         style={styles.buttonNewSearch}
-        onTap={() =>
-          navigation.navigate('modify-search', {
-            type: 'NEW',
-          })
-        }
+        onTap={() => setModalVisible(true)}
       />
     </Container>
   );

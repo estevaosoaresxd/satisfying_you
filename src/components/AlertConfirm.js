@@ -1,52 +1,75 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {StyleSheet, View, Text, Pressable, Modal} from 'react-native';
+import {ButtonDefault} from './ButtonDefault';
+import {Row} from './Row';
+import {TextDefault} from './TextDefault';
+import {Column} from './Column';
 
-const AlertConfirm = ({onPressConfirm, onPressCancel}) => {
-  const [showAlert, setShowAlert] = useState(false);
-
+const AlertConfirm = ({
+  onPressConfirm,
+  onPressCancel,
+  showAlert,
+  setShowAlert,
+}) => {
   return (
-    <View style={styles.body}>
-      <Modal
-        visible={showAlert}
-        transparent
-        onRequestClose={(() => setShowAlert(false), onPressConfirm)}
-        animationType="slide"
-        hardwareAccelerated>
-        <View style={styles.centered_view}>
-          <View style={styles.warning_modal}>
-            <View style={styles.warning_title}>
-              <Text style={styles.text}>WARNING!</Text>
-            </View>
-            <View style={styles.warning_body}>
-              <Text style={styles.text}>
-                The name must be longer than 3 charachters
-              </Text>
-            </View>
-            <Pressable
-              onPress={(() => setShowAlert(false), onPressConfirm)}
-              style={styles.warning_button}
-              android_ripple={{color: '#fff'}}>
-              <Text style={styles.text}>OK</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
-    </View>
+    <Modal
+      visible={showAlert}
+      transparent={true}
+      onRequestClose={() => {
+        setShowAlert(!showAlert);
+      }}
+      animationType="fade"
+      hardwareAccelerated>
+      <View style={styles.centered_view}>
+        <Column style={styles.warning_modal}>
+          <TextDefault style={styles.text}>
+            Tem certeza de apagar essa pesquisa?
+          </TextDefault>
+          <Row>
+            <ButtonDefault
+              onTap={() => {
+                setShowAlert(!showAlert);
+              }}
+              text="SIM"
+              style={{...styles.button, ...styles.button_yes}}
+              titleStyle={styles.button.title}
+            />
+            <View style={{width: 10}} />
+            <ButtonDefault
+              onTap={() => {
+                setShowAlert(!showAlert);
+              }}
+              text="CANCELAR"
+              style={{...styles.button, ...styles.button_cancel}}
+              titleStyle={styles.button.title}
+            />
+          </Row>
+        </Column>
+      </View>
+    </Modal>
   );
 };
 
 const styles = StyleSheet.create({
   text: {
-    color: '#000000',
+    color: '#ffffff',
     fontSize: 20,
     margin: 10,
     textAlign: 'center',
   },
-
   button: {
-    width: 150,
     height: 50,
-    alignItems: 'center',
+    width: 140,
+    justifyContent: 'center',
+    title: {
+      fontSize: 24,
+    },
+  },
+  button_yes: {
+    backgroundColor: '#FF8383',
+  },
+  button_cancel: {
+    backgroundColor: '#3F92C5',
   },
   centered_view: {
     flex: 1,
@@ -55,30 +78,10 @@ const styles = StyleSheet.create({
     backgroundColor: '#00000099',
   },
   warning_modal: {
-    width: 300,
-    height: 300,
-    backgroundColor: '#ffffff',
-    borderWidth: 1,
-    borderColor: '#000',
-    borderRadius: 20,
-  },
-  warning_title: {
-    height: 50,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#ff0',
-    borderTopRightRadius: 20,
-    borderTopLeftRadius: 20,
-  },
-  warning_body: {
-    height: 200,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  warning_button: {
-    backgroundColor: '#00ffff',
-    borderBottomLeftRadius: 20,
-    borderBottomRightRadius: 20,
+    width: 320,
+    height: 160,
+    backgroundColor: '#2B1F5C',
+    justifyContent: 'space-evenly',
   },
 });
 
