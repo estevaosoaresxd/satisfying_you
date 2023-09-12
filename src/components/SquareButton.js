@@ -1,31 +1,46 @@
 import {TouchableOpacity, StyleSheet} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-
+import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Column} from './Column';
 import {TextDefault} from './TextDefault';
 
 const SquareButton = ({
   icon,
+  BaseSvg,
+  typeIcon,
   title,
   description,
   onTap,
-  isOutline,
   styleButton,
   styleIcon,
   styleTitle,
   styleDescription,
 }) => {
+  const iconBase = () => {
+    switch (typeIcon) {
+      case 'community':
+        return (
+          <IconCommunity
+            name={icon}
+            size={120}
+            style={{...styles.icon, ...styleIcon}}
+          />
+        );
+      case 'svg':
+        return <BaseSvg width={80} height={80} />;
+      default:
+        return (
+          <Icon name={icon} size={120} style={{...styles.icon, ...styleIcon}} />
+        );
+    }
+  };
+
   return (
     <Column>
       <TouchableOpacity
         style={{...styles.button, ...styleButton}}
         onPress={onTap}>
-        {isOutline ? (
-          <Icon name={icon} size={120} style={{...styles.icon, ...styleIcon}} />
-        ) : (
-          <Icon name={icon} size={120} style={{...styles.icon, ...styleIcon}} />
-        )}
-
+        {iconBase()}
         <TextDefault style={{...styles.title, ...styleTitle}}>
           {title}
         </TextDefault>

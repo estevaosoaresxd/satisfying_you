@@ -1,5 +1,6 @@
 import React from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
+import baseSvg from './../../../assets/svg/celebration.svg';
 
 // COMPONENTS
 import {Container} from '../../components/Container';
@@ -16,10 +17,10 @@ const DATA = [
     iconColor: '#704141',
   },
   {
-    icon: 'groups',
+    icon: 'account-group-outline',
+    typeIcon: 'community',
     title: 'UBUNTU 2022',
     description: '05/06/2022',
-    isOutline: true,
     iconColor: '#383838',
   },
   {
@@ -29,13 +30,15 @@ const DATA = [
     iconColor: '#D71616',
   },
   {
-    icon: 'beach-access',
+    icon: 'umbrella-beach-outline',
     title: 'COTB',
+    typeIcon: 'community',
     description: '01/04/2022',
     iconColor: '#37BD6D',
   },
   {
-    icon: 'celebration',
+    BaseSvg: baseSvg,
+    typeIcon: 'svg',
     title: 'CARNAVAL',
     description: '15/02/2020',
     iconColor: '#C60EB3',
@@ -43,7 +46,14 @@ const DATA = [
 ];
 
 const HomePage = ({navigation, route}) => {
-  const renderItem = ({icon, title, description, isOutline, iconColor}) => (
+  const renderItem = ({
+    icon,
+    typeIcon,
+    BaseSvg,
+    title,
+    description,
+    iconColor,
+  }) => (
     <SquareButton
       icon={icon}
       title={title}
@@ -52,7 +62,8 @@ const HomePage = ({navigation, route}) => {
           title: title,
         })
       }
-      isOutline={isOutline}
+      BaseSvg={baseSvg}
+      typeIcon={typeIcon}
       description={description}
       styleButton={styles.flatlist.button}
       styleIcon={{...styles.flatlist.button.icon, color: iconColor}}

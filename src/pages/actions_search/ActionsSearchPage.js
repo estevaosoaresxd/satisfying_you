@@ -3,6 +3,8 @@ import {StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {Row} from '../../components/Row';
 import {SquareButton} from '../../components/SquareButton';
+import ContractEdit from './../../../assets/svg/contract-edit.svg';
+import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
 
 const ActionsSearchPage = ({navigation, route}) => {
   const {title} = route.params;
@@ -19,6 +21,8 @@ const ActionsSearchPage = ({navigation, route}) => {
         <SquareButton
           icon="history-edu"
           title="Modificar"
+          typeIcon="svg"
+          BaseSvg={ContractEdit}
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
@@ -31,6 +35,8 @@ const ActionsSearchPage = ({navigation, route}) => {
         <SquareButton
           icon="library-add-check"
           title="Coletar dados"
+          typeIcon="svg"
+          BaseSvg={AddCheckOutline}
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
