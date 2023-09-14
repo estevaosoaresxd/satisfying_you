@@ -28,7 +28,7 @@ export const CustomDrawerComp = props => {
       </Column>
 
       <TouchableOpacity
-        onPress={() => navigation.navigate('login')}
+        onPress={() => navigation.replace('login')}
         style={styles.button}>
         <Row style={styles.row}>
           <Icon name="logout" style={styles.icon} />

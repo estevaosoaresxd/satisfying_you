@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Row} from '../../components/Row';
 import {Container} from '../../components/Container';
@@ -7,8 +7,23 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
+import {validateEmail} from '../../utils/validators/email_validator';
 
 const LoginPage = ({navigation}) => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState(false);
+
+  const login = () => {
+    setError(false);
+
+    if (validateEmail(email)) {
+      navigation.replace('drawer-home');
+    } else {
+      setError(true);
+    }
+  };
+
   return (
     <Container style={styles.container}>
       <Row>
@@ -18,27 +33,39 @@ const LoginPage = ({navigation}) => {
       </Row>
 
       <Column>
-        <InputValidator text="E-mail"></InputValidator>
+        <InputValidator text="E-mail" onChange={setEmail} value={email} />
         <View style={{height: 10}}></View>
-        <InputValidator text="Senha" isPassword={true}></InputValidator>
-        <TextDefault style={styles.error}>
-          E-mail e/ ou senha inválidos
-        </TextDefault>
+        <InputValidator
+          text="Senha"
+          value={password}
+          onChange={setPassword}
+          onSubmit={login}
+          isPassword={true}
+        />
+        {error ? (
+          <TextDefault style={styles.error}>
+            E-mail e/ ou senha inválidos
+          </TextDefault>
+        ) : null}
         <View style={{height: 15}}></View>
-
         <ButtonDefault
           text="Entrar"
           style={styles.buttonLogin}
-          onTap={() => navigation.navigate('drawer-home')}
+          onTap={() => login()}
         />
       </Column>
 
       <Column>
-        <ButtonDefault text="Criar minha conta" style={styles.buttonForgot} />
+        <ButtonDefault
+          text="Criar minha conta"
+          style={styles.buttonForgot}
+          onTap={() => navigation.navigate('register')}
+        />
         <View style={{height: 5}}></View>
         <ButtonDefault
           text="Esqueci minha senha"
           style={styles.buttonRegister}
+          onTap={() => navigation.navigate('forgot-password')}
         />
       </Column>
     </Container>
