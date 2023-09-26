@@ -1,76 +1,101 @@
-import React, { useState } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Container } from '../../components/Container';
-import { InputValidator } from '../../components/InputValidator';
-import { TextDefault } from '../../components/TextDefault';
-import { ButtonDefault } from '../../components/ButtonDefault';
-import { Column } from '../../components/Column';
-import { validateEmail } from '../../utils/validators/email_validator';
+import React, {useState, useEffect} from 'react';
+import {StyleSheet, View} from 'react-native';
+import {Container} from '../../components/Container';
+import {InputValidator} from '../../components/InputValidator';
+import {TextDefault} from '../../components/TextDefault';
+import {ButtonDefault} from '../../components/ButtonDefault';
+import {Column} from '../../components/Column';
+import {validateEmail} from '../../utils/validators/email_validator';
 
-const RegisterPage = ({ navigation }) => {
+const RegisterPage = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [passwordRep, setPasswordRep] = useState('');
   const [errorEmail, setErrorEmail] = useState(false);
-  const [errorSenha, setErrorSenha] = useState(false);
+  const [errorPassword, setErrorPassword] = useState(false);
 
-  const cadastra = () => {
+  useEffect(() => {
+    navigation.setOptions({
+      title: 'Nova Conta',
+    });
+  }, [navigation]);
+
+  const register = () => {
     setErrorEmail(false);
-    setErrorSenha(false);
-    if (validateEmail(email) === false) {
+    setErrorPassword(false);
+
+    if (!validateEmail(email)) {
       setErrorEmail(true);
     }
-    if (password !== passwordRep) {
-      setErrorSenha(true);
+
+    if (
+      password !== passwordRep ||
+      password.length < 1 ||
+      passwordRep.length < 1
+    ) {
+      setErrorPassword(true);
     }
-    if (setErrorEmail === true && setErrorSenha === true) {
+
+    console.log(!validateEmail(email) + 'email');
+
+    console.log(
+      password !== passwordRep &&
+        password.length < 1 &&
+        passwordRep.length < 1 + 'password',
+    );
+
+    if (!setErrorEmail && !setErrorPassword) {
       navigation.navigate('login');
     }
   };
 
-  return <Container style={styles.container}>
-    <Column>
-      <InputValidator text="E-mail" onChange={setEmail} value={email} />
-      <View style={{ height: 10 }}></View>
+  return (
+    <Container style={styles.container}>
+      <Column>
+        <InputValidator text="E-mail" onChange={setEmail} value={email} />
+        {errorEmail ? (
+          <TextDefault style={styles.error}>
+            E-mail parece ser inválido
+          </TextDefault>
+        ) : null}
+      </Column>
+      {/* <View style={{height: 10}}></View> */}
       <InputValidator
         text="Senha"
         value={password}
         onChange={setPassword}
         isPassword={true}
       />
-      <View style={{ height: 10 }}></View>
-      <InputValidator
-        text="Repetir Senha"
-        value={passwordRep}
-        onChange={setPasswordRep}
-        isPassword={true}
-      />
-      {errorEmail ? (
-        <TextDefault style={styles.error}>
-          E-mail parece ser inválido
-        </TextDefault>
-      ) : null}
+      {/* <View style={{height: 10}}></View> */}
+      <Column>
+        <InputValidator
+          text="Repetir Senha"
+          value={passwordRep}
+          onChange={setPasswordRep}
+          isPassword={true}
+        />
+        {errorPassword ? (
+          <TextDefault style={styles.error}>
+            O campo repetir senha difere da senha
+          </TextDefault>
+        ) : null}
+      </Column>
 
-      {errorSenha ? (
-        <TextDefault style={styles.error}>
-          O campo repetir senha difere da senha
-        </TextDefault>
-      ) : null}
-
-      <View style={{ height: 15 }}></View>
+      {/* <View style={{height: 15}}></View> */}
       <ButtonDefault
-        text="Cadastrar"
+        text="CADASTRAR"
         style={styles.buttonCadastrar}
-        onTap={() => cadastra()}
+        onTap={() => register()}
       />
-    </Column>
-  </Container>
+    </Container>
+  );
 };
 
 const styles = StyleSheet.create({
   container: {
     paddingHorizontal: '15%',
-    paddingVertical: '1%'
+    paddingVertical: 15,
+    justifyContent: 'space-between',
   },
   buttonCadastrar: {
     fontWeight: 50,
@@ -79,9 +104,8 @@ const styles = StyleSheet.create({
     marginVertical: 10,
   },
   error: {
-    color: '#FD7979'
-  }
-
+    color: '#FD7979',
+  },
 });
 
-export { RegisterPage };
+export {RegisterPage};
