@@ -33,7 +33,12 @@ const LoginPage = ({navigation}) => {
       </Row>
 
       <Column>
-        <InputValidator text="E-mail" onChange={setEmail} value={email} />
+        <InputValidator
+          text="E-mail"
+          onChange={setEmail}
+          value={email}
+          placeholder="jurandir.pereira@hotmail.com"
+        />
         <View style={{height: 10}}></View>
         <InputValidator
           text="Senha"
@@ -41,6 +46,7 @@ const LoginPage = ({navigation}) => {
           onChange={setPassword}
           onSubmit={login}
           isPassword={true}
+          placeholder="*********"
         />
         {error ? (
           <TextDefault style={styles.error}>

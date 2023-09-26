@@ -23,6 +23,7 @@ const InputValidator = ({
         keyboardType={keyboardType}
         placeholder={placeholder}
         secureTextEntry={isPassword ?? false}
+        placeholderTextColor={'#3F92C5'}
       />
     </View>
   );
@@ -39,6 +40,7 @@ const styles = StyleSheet.create({
     color: '#3F92C5',
     fontSize: 18,
     height: 40,
+    paddingStart: 10,
   },
 });
 

@@ -8,39 +8,42 @@ import {ButtonDefault} from '../../components/ButtonDefault';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
+import {ImagesAssets} from '../../../assets/images/ImagesAssets';
 
 const DATA = [
   {
-    icon: 'devices',
+    typeIcon: 'img',
     title: 'SECOMP 2023',
     description: '10/10/2022',
+    image: ImagesAssets.devices,
     iconColor: '#704141',
   },
   {
-    icon: 'account-group-outline',
-    typeIcon: 'community',
+    typeIcon: 'img',
     title: 'UBUNTU 2022',
     description: '05/06/2022',
+    image: ImagesAssets.groups,
     iconColor: '#383838',
   },
   {
-    icon: 'woman',
+    typeIcon: 'img',
     title: 'MENINAS CPU',
+    image: ImagesAssets.woman,
     description: '01/04/2022',
     iconColor: '#D71616',
   },
   {
-    icon: 'umbrella-beach-outline',
+    typeIcon: 'img',
     title: 'COTB',
-    typeIcon: 'community',
+    image: ImagesAssets.umbrella,
     description: '01/04/2022',
     iconColor: '#37BD6D',
   },
   {
-    BaseSvg: baseSvg,
-    typeIcon: 'svg',
+    typeIcon: 'img',
     title: 'CARNAVAL',
     description: '15/02/2020',
+    image: ImagesAssets.party,
     iconColor: '#C60EB3',
   },
 ];
@@ -50,6 +53,7 @@ const HomePage = ({navigation, route}) => {
     icon,
     typeIcon,
     BaseSvg,
+    image,
     title,
     description,
     iconColor,
@@ -62,7 +66,8 @@ const HomePage = ({navigation, route}) => {
           title: title,
         })
       }
-      BaseSvg={baseSvg}
+      BaseSvg={BaseSvg}
+      image={image}
       typeIcon={typeIcon}
       description={description}
       styleButton={styles.flatlist.button}

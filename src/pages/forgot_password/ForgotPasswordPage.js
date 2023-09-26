@@ -30,7 +30,12 @@ const ForgotPasswordPage = ({navigation}) => {
   return (
     <Container style={styles.container}>
       <Column>
-        <InputValidator text="E-mail" onChange={setEmail} value={email} />
+        <InputValidator
+          text="E-mail"
+          onChange={setEmail}
+          value={email}
+          placeholder="jurandir.pereira@hotmail.com"
+        />
         <View style={{height: 5}}></View>
         {error ? (
           <TextDefault style={styles.error}>

@@ -52,21 +52,25 @@ const RegisterPage = ({navigation}) => {
   return (
     <Container style={styles.container}>
       <Column>
-        <InputValidator text="E-mail" onChange={setEmail} value={email} />
+        <InputValidator
+          text="E-mail"
+          onChange={setEmail}
+          value={email}
+          placeholder="jurandir.pereira@hotmail.com"
+        />
         {errorEmail ? (
           <TextDefault style={styles.error}>
             E-mail parece ser inválido
           </TextDefault>
         ) : null}
       </Column>
-      {/* <View style={{height: 10}}></View> */}
       <InputValidator
         text="Senha"
         value={password}
         onChange={setPassword}
         isPassword={true}
+        placeholder="*********"
       />
-      {/* <View style={{height: 10}}></View> */}
       <Column>
         <InputValidator
           text="Repetir Senha"
@@ -81,7 +85,6 @@ const RegisterPage = ({navigation}) => {
         ) : null}
       </Column>
 
-      {/* <View style={{height: 15}}></View> */}
       <ButtonDefault
         text="CADASTRAR"
         style={styles.buttonCadastrar}

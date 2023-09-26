@@ -1,4 +1,4 @@
-import {TouchableOpacity, StyleSheet} from 'react-native';
+import {TouchableOpacity, StyleSheet, Image} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import IconCommunity from 'react-native-vector-icons/MaterialCommunityIcons';
 import {Column} from './Column';
@@ -7,6 +7,7 @@ import {TextDefault} from './TextDefault';
 const SquareButton = ({
   icon,
   BaseSvg,
+  image,
   typeIcon,
   title,
   description,
@@ -28,6 +29,8 @@ const SquareButton = ({
         );
       case 'svg':
         return <BaseSvg width={80} height={80} />;
+      case 'img':
+        return <Image style={styles.image} source={image} />;
       default:
         return (
           <Icon name={icon} size={120} style={{...styles.icon, ...styleIcon}} />
@@ -72,6 +75,10 @@ const styles = StyleSheet.create({
   description: {
     color: '#8B8B8B',
     fontSize: 16,
+  },
+  image: {
+    width: 80,
+    height: 80,
   },
 });
 
