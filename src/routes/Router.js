@@ -90,7 +90,7 @@ export const Router = () => {
         <Stack.Screen
           name="satisfying-collect"
           component={SatisfyingCollectPage}
-          options={navigationOptions}
+          options={{headerShown: false}}
         />
         <Stack.Screen
           name="chart-report"

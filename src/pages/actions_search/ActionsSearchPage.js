@@ -40,7 +40,11 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
-          onTap={() => navigation.navigate('satisfying-collect')}
+          onTap={() =>
+            navigation.navigate('satisfying-collect', {
+              title: title,
+            })
+          }
         />
         <SquareButton
           icon="donut-large"
