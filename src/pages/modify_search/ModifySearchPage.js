@@ -20,7 +20,7 @@ const ModifySearchPage = ({ navigation, route }) => {
   const [nome, setNome] = React.useState('');
   const [data, setData] = React.useState(new Date());
 
-  const handleNomeChange = (text) => {
+  const handleNameChange = (text) => {
     setNome(text);
   };
 
@@ -28,8 +28,8 @@ const ModifySearchPage = ({ navigation, route }) => {
     setData(data);
   };
 
-  const handleCadastro = () => {
-    // Fazer algo para cadastrar a pesquisa
+  const handleRegister = (register) => {
+    setRegister(register);
   };
 
   React.useEffect(() => {
@@ -43,7 +43,7 @@ const ModifySearchPage = ({ navigation, route }) => {
       <TextInput
         label="Nome"
         value={nome}
-        onChange={handleNomeChange}
+        onChange={handleNameChange}
       />
       <DatePicker
         value={data}
@@ -51,7 +51,7 @@ const ModifySearchPage = ({ navigation, route }) => {
       />
       <Button
         title="Cadastrar"
-        onPress={handleCadastro}
+        onPress={handleRegister}
       />
     </Container>
   );
