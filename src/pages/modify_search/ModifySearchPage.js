@@ -7,12 +7,15 @@ import {Column} from '../../components/Column';
 import {ImageButton} from '../../components/ImageButton';
 import {TextDefault} from '../../components/TextDefault';
 import {ImagesAssets} from '../../../assets/images/ImagesAssets';
+import {SquareButton} from '../../components/SquareButton';
+import {AlertConfirm} from '../../components/AlertConfirm';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
   const [date, setDate] = useState('');
   const [errorName, setErrorName] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   const {type} = route.params;
 
@@ -91,13 +94,33 @@ const ModifySearchPage = ({navigation, route}) => {
       <ImageButton
         text="Imagem"
         styleButton={styles.buttonImage}
-        img={type == 'NEW' ? ImagesAssets.party : null}
+        img={type == 'NEW' ? ImagesAssets.party : undefined}
       />
+      {type == 'UPDATE' ? (
+        <Column style={styles.bottomButton}>
+          <SquareButton
+            icon="trash-can-outline"
+            title="Apagar"
+            onTap={() => setShowAlert(true)}
+            typeIcon="community"
+            styleButton={styles.buttonTrash}
+            styleIcon={{...styles.buttonTrash.icon}}
+            styleTitle={styles.buttonTrash.title}
+          />
+        </Column>
+      ) : undefined}
 
       <ButtonDefault
         text={getButtonName()}
         style={styles.button}
         onTap={() => onTapButton()}
+      />
+
+      <AlertConfirm
+        showAlert={showAlert}
+        setShowAlert={setShowAlert}
+        onPressCancel={() => navigation.pop()}
+        onPressConfirm={() => navigation.navigate('home')}
       />
     </Container>
   );
@@ -109,6 +132,11 @@ const styles = StyleSheet.create({
     paddingVertical: 12,
     justifyContent: 'space-between',
   },
+  bottomButton: {
+    position: 'absolute',
+    bottom: 5,
+    right: 5,
+  },
   button: {
     fontWeight: 50,
     backgroundColor: '#37BD6D',
@@ -118,6 +146,18 @@ const styles = StyleSheet.create({
   buttonImage: {
     width: '35%',
     height: 55,
+  },
+  buttonTrash: {
+    backgroundColor: 'transparent',
+    icon: {
+      fontSize: 24,
+      color: '#ffffff',
+      marginBottom: 2,
+    },
+    title: {
+      color: '#ffffff',
+      fontSize: 14,
+    },
   },
   error: {
     color: '#FD7979',

@@ -29,6 +29,7 @@ const AlertConfirm = ({
             <ButtonDefault
               onTap={() => {
                 setShowAlert(!showAlert);
+                onPressConfirm();
               }}
               text="SIM"
               style={{...styles.button, ...styles.button_yes}}
@@ -38,6 +39,7 @@ const AlertConfirm = ({
             <ButtonDefault
               onTap={() => {
                 setShowAlert(!showAlert);
+                onPressCancel();
               }}
               text="CANCELAR"
               style={{...styles.button, ...styles.button_cancel}}

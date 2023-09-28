@@ -102,7 +102,7 @@ const HomePage = ({navigation, route}) => {
         showsHorizontalScrollIndicator={false}
         contentContainerStyle={styles.flatlist.content}
       />
-      <AlertConfirm showAlert={false} />
+
       <ButtonDefault
         text="NOVA PESQUISA"
         style={styles.buttonNewSearch}
