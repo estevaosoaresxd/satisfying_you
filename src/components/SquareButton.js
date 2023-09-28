@@ -8,6 +8,7 @@ const SquareButton = ({
   icon,
   BaseSvg,
   image,
+  myKey,
   typeIcon,
   title,
   description,
@@ -42,7 +43,8 @@ const SquareButton = ({
     <Column>
       <TouchableOpacity
         style={{...styles.button, ...styleButton}}
-        onPress={onTap}>
+        onPress={onTap}
+        key={myKey}>
         {iconBase()}
         <TextDefault style={{...styles.title, ...styleTitle}}>
           {title}

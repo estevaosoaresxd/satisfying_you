@@ -78,8 +78,10 @@ const SatisfyingCollectPage = ({navigation, route}) => {
           </TextDefault>
           <View style={{height: height * 0.125}} />
           <Row>
-            {satisfyingButtons.map(button => (
+            {satisfyingButtons.map((button, key) => (
               <SquareButton
+                key={key}
+                myKey={key}
                 icon={button.icon}
                 title={button.title}
                 onTap={() => onTapCollect()}
