@@ -30,21 +30,13 @@ const RegisterPage = ({navigation}) => {
 
     if (
       password !== passwordRep ||
-      password.length < 1 ||
-      passwordRep.length < 1
+      password.trim().length < 1 ||
+      passwordRep.trim().length < 1
     ) {
       setErrorPassword(true);
     }
 
-    console.log(!validateEmail(email) + 'email');
-
-    console.log(
-      password !== passwordRep &&
-        password.length < 1 &&
-        passwordRep.length < 1 + 'password',
-    );
-
-    if (!setErrorEmail && !setErrorPassword) {
+    if (!errorEmail && !errorPassword) {
       navigation.navigate('login');
     }
   };

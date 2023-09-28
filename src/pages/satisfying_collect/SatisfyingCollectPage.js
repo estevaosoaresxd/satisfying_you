@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
-import {Dimensions, StyleSheet, View} from 'react-native';
+import {Dimensions, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Container} from '../../components/Container';
 import {TextDefault} from '../../components/TextDefault';
 import {Row} from '../../components/Row';
 import {SquareButton} from '../../components/SquareButton';
 import {Column} from '../../components/Column';
+import baseSvg from './../../../assets/svg/horrible.svg';
 
 const {width, height} = Dimensions.get('window');
 
@@ -20,26 +21,32 @@ const SatisfyingCollectPage = ({navigation, route}) => {
 
   const satisfyingButtons = [
     {
+      type: 'svg',
+      baseSvg: baseSvg,
       title: 'Péssimo',
       icon: 'emoticon-sad-outline',
       iconColor: '#D71616',
     },
     {
+      type: 'community',
       title: 'Ruim',
       icon: 'emoticon-sad-outline',
       iconColor: '#FF360A',
     },
     {
+      type: 'community',
       title: 'Neutro',
       icon: 'emoticon-neutral-outline',
       iconColor: '#FFC632',
     },
     {
+      type: 'community',
       title: 'Bom',
       icon: 'emoticon-happy-outline',
       iconColor: '#37BD6D',
     },
     {
+      type: 'community',
       title: 'Excelente',
       icon: 'emoticon-excited-outline',
       iconColor: '#25BC22',
@@ -48,6 +55,12 @@ const SatisfyingCollectPage = ({navigation, route}) => {
 
   return (
     <Container style={styles.container}>
+      <Column style={styles.lateralButton}>
+        <TouchableOpacity
+          style={styles.lateralButton.button}
+          onPress={() => navigation.pop()}></TouchableOpacity>
+      </Column>
+
       {showMessage ? (
         <Column>
           <TextDefault style={styles.title}>
@@ -70,7 +83,8 @@ const SatisfyingCollectPage = ({navigation, route}) => {
                 icon={button.icon}
                 title={button.title}
                 onTap={() => onTapCollect()}
-                typeIcon="community"
+                BaseSvg={button.baseSvg}
+                typeIcon={button.type}
                 styleButton={styles.button}
                 styleIcon={{...styles.button.icon, color: button.iconColor}}
                 styleTitle={styles.button.title}
@@ -88,7 +102,16 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-
+  lateralButton: {
+    position: 'absolute',
+    right: 0,
+    top: 0,
+    height: 40,
+    width: '10%',
+    button: {
+      height: 40,
+    },
+  },
   title: {
     fontSize: 30,
     color: 'white',
