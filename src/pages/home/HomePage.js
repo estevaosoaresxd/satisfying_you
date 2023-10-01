@@ -64,6 +64,8 @@ const HomePage = ({navigation, route}) => {
       onTap={() =>
         navigation.navigate('actions-search', {
           title: title,
+          date: description,
+          img: image,
         })
       }
       BaseSvg={BaseSvg}

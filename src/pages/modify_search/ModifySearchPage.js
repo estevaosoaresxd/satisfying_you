@@ -13,13 +13,23 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
-  const [date, setDate] = useState('');
+  const [calendar, setCalendar] = useState('');
   const [errorName, setErrorName] = useState(false);
-  const [errorDate, setErrorDate] = useState(false);
+  const [errorCalendar, setErrorCalendar] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showDate, setShowDate] = useState(false);
 
-  const {type} = route.params;
+  const {type, title, date, img} = route.params;
+
+  const setValuesInInput = () => {
+    if (title) {
+      setName(title);
+    }
+
+    if (date) {
+      setCalendar(date);
+    }
+  };
 
   const getTitle = () => {
     switch (type) {
@@ -41,7 +51,7 @@ const ModifySearchPage = ({navigation, route}) => {
 
   const onTapButton = () => {
     setErrorName(false);
-    setErrorDate(false);
+    setErrorCalendar(false);
 
     let isValid = true;
 
@@ -50,8 +60,8 @@ const ModifySearchPage = ({navigation, route}) => {
       isValid = false;
     }
 
-    if (!date.trim()) {
-      setErrorDate(true);
+    if (!calendar.trim()) {
+      setErrorCalendar(true);
       isValid = false;
     }
 
@@ -61,7 +71,7 @@ const ModifySearchPage = ({navigation, route}) => {
   };
 
   const onChangeDate = (ev, date) => {
-    setDate(date);
+    // setCalendar(date);
     setShowDate(false);
   };
 
@@ -69,6 +79,8 @@ const ModifySearchPage = ({navigation, route}) => {
     navigation.setOptions({
       title: getTitle(),
     });
+
+    setValuesInInput();
   }, [navigation]);
 
   return (
@@ -89,20 +101,20 @@ const ModifySearchPage = ({navigation, route}) => {
       <Column>
         <InputValidator
           text="Data"
-          value={date}
-          onChange={setDate}
+          value={calendar}
+          onChange={setCalendar}
           typeIcon="img"
           hasIcon={true}
           image={ImagesAssets.calendar}
           onTapIcon={() => setShowDate(true)}
         />
-        {errorDate && (
+        {errorCalendar && (
           <TextDefault style={styles.error}>Preencha a data</TextDefault>
         )}
       </Column>
       {showDate && (
         <DateTimePicker
-          value={date}
+          value={new Date()}
           positiveButton={{label: 'CONFIRMAR', textColor: 'green'}}
           negativeButton={{label: 'CANCELAR', textColor: 'red'}}
           mode="calendar"
@@ -115,8 +127,9 @@ const ModifySearchPage = ({navigation, route}) => {
       <ImageButton
         text="Imagem"
         styleButton={styles.buttonImage}
-        img={type == 'NEW' ? ImagesAssets.party : undefined}
+        img={type != 'NEW' ? img : undefined}
       />
+
       {type == 'UPDATE' && (
         <Column style={styles.bottomButton}>
           <SquareButton

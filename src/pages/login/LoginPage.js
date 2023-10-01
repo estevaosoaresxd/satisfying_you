@@ -26,8 +26,8 @@ const LoginPage = ({navigation}) => {
 
   return (
     <Container style={styles.container}>
-      <Row>
-        <TextDefault style={styles.title}>Satisfying</TextDefault>
+      <Row style={styles.row}>
+        <TextDefault style={styles.title}>Satisfying.you</TextDefault>
         <View style={{width: 30}}></View>
         <Icon name="sentiment-satisfied-alt" size={50} color="white" />
       </Row>
@@ -80,19 +80,21 @@ const LoginPage = ({navigation}) => {
 
 const styles = StyleSheet.create({
   title: {
-    fontSize: 50,
+    fontSize: 45,
     color: 'white',
   },
   error: {
     color: '#FD7979',
   },
+  row: {},
   container: {
+    paddingTop: '2%',
     paddingHorizontal: '15%',
-    paddingVertical: '1%',
+    paddingBottom: '1%',
   },
   buttonLogin: {
     backgroundColor: '#37BD6D',
-    paddingVertical: 10,
+    paddingVertical: 8,
   },
   buttonForgot: {
     backgroundColor: '#B0CCDE',

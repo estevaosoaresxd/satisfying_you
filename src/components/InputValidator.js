@@ -86,8 +86,6 @@ const styles = StyleSheet.create({
     width: 30,
   },
   row: {
-    justifyContent: 'flex-start',
-    alignItems: 'center',
     backgroundColor: 'white',
     height: 40,
     paddingStart: 10,
@@ -95,8 +93,6 @@ const styles = StyleSheet.create({
     input: {
       flex: 1,
       fontFamily: 'AveriaLibre-Regular',
-      alignItems: 'center',
-      justifyContent: 'flex-start',
       color: '#3F92C5',
       fontSize: 18,
       height: 40,

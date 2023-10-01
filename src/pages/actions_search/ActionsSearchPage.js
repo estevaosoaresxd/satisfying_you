@@ -7,7 +7,7 @@ import ContractEdit from './../../../assets/svg/contract-edit.svg';
 import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
 
 const ActionsSearchPage = ({navigation, route}) => {
-  const {title} = route.params;
+  const {title, date, img} = route.params;
 
   React.useEffect(() => {
     navigation.setOptions({
@@ -29,6 +29,9 @@ const ActionsSearchPage = ({navigation, route}) => {
           onTap={() =>
             navigation.navigate('modify-search', {
               type: 'UPDATE',
+              title: title,
+              date: date,
+              img: img,
             })
           }
         />
@@ -69,10 +72,10 @@ const styles = StyleSheet.create({
   button: {
     icon: {
       color: 'white',
-      fontSize: 90,
-      marginBottom: 10,
+      fontSize: 80,
     },
     title: {
+      marginTop: 10,
       color: 'white',
       fontSize: 28,
     },

@@ -2,7 +2,7 @@ import React from 'react';
 
 import {View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TextDefault} from '../../../components/TextDefault';
 import {Container} from '../../../components/Container';
 import {Row} from '../../../components/Row';
@@ -20,7 +20,7 @@ export const CustomDrawerComp = props => {
           onPress={() => navigation.navigate('home')}
           style={styles.button}>
           <Row style={styles.row}>
-            <Icon name="description" style={styles.icon} />
+            <Icon name="file-document-outline" style={styles.icon} />
             <View style={{width: 10}}></View>
             <TextDefault style={styles.label}>Pesquisas</TextDefault>
           </Row>
