@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import {useState, useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {ButtonDefault} from '../../components/ButtonDefault';
@@ -13,7 +13,7 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState('');
   const [errorName, setErrorName] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -43,19 +43,19 @@ const ModifySearchPage = ({navigation, route}) => {
     setErrorName(false);
     setErrorDate(false);
 
-    if (name.trim().length < 1) {
-      console.log('entrou nome');
+    let isValid = true;
+
+    if (!name.trim()) {
       setErrorName(true);
+      isValid = false;
     }
 
-    if (date.trim().length < 1) {
-      console.log('entrou data');
+    if (!date.trim()) {
       setErrorDate(true);
+      isValid = false;
     }
 
-    console.log(errorName, errorDate);
-
-    if (!errorName && !errorDate) {
+    if (isValid) {
       navigation.navigate('home');
     }
   };
@@ -89,7 +89,7 @@ const ModifySearchPage = ({navigation, route}) => {
       <Column>
         <InputValidator
           text="Data"
-          value={''}
+          value={date}
           onChange={setDate}
           typeIcon="img"
           hasIcon={true}

@@ -24,8 +24,11 @@ const RegisterPage = ({navigation}) => {
     setErrorEmail(false);
     setErrorPassword(false);
 
+    let isValid = true;
+
     if (!validateEmail(email)) {
       setErrorEmail(true);
+      isValid = false;
     }
 
     if (
@@ -34,9 +37,10 @@ const RegisterPage = ({navigation}) => {
       passwordRep.trim().length < 1
     ) {
       setErrorPassword(true);
+      isValid = false;
     }
 
-    if (!errorEmail && !errorPassword) {
+    if (isValid) {
       navigation.navigate('login');
     }
   };
