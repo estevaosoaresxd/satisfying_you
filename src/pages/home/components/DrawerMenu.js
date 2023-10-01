@@ -8,7 +8,7 @@ import {Container} from '../../../components/Container';
 import {Row} from '../../../components/Row';
 import {Column} from '../../../components/Column';
 
-export const CustomDrawerComp = props => {
+export const DrawerMenu = props => {
   const {navigation} = props;
 
   return (

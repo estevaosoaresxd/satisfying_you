@@ -13,7 +13,7 @@ import {ForgotPasswordPage} from '../pages/forgot_password/ForgotPasswordPage';
 import {ModifySearchPage} from '../pages/modify_search/ModifySearchPage';
 import {ActionsSearchPage} from '../pages/actions_search/ActionsSearchPage';
 import {SatisfyingCollectPage} from '../pages/satisfying_collect/SatisfyingCollectPage';
-import {CustomDrawerComp} from '../pages/home/components/Drawer';
+import {DrawerMenu} from '../pages/home/components/DrawerMenu';
 import {ChartReportPage} from '../pages/chart_report/ChartReportPage';
 
 const Stack = createNativeStackNavigator();
@@ -46,7 +46,7 @@ const drawerOptions = () => ({
 
 const DrawerNavigation = () => (
   <Drawer.Navigator
-    drawerContent={props => <CustomDrawerComp {...props} />}
+    drawerContent={props => <DrawerMenu {...props} />}
     screenOptions={drawerOptions}>
     <Drawer.Screen name="home" component={HomePage} />
   </Drawer.Navigator>
