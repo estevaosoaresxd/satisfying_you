@@ -9,13 +9,15 @@ import {TextDefault} from '../../components/TextDefault';
 import {ImagesAssets} from '../../../assets/images/ImagesAssets';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
+import DateTimePicker from '@react-native-community/datetimepicker';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date());
   const [errorName, setErrorName] = useState(false);
   const [errorDate, setErrorDate] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showDate, setShowDate] = useState(false);
 
   const {type} = route.params;
 
@@ -58,6 +60,11 @@ const ModifySearchPage = ({navigation, route}) => {
     }
   };
 
+  const onChangeDate = (ev, date) => {
+    setDate(date);
+    setShowDate(false);
+  };
+
   useEffect(() => {
     navigation.setOptions({
       title: getTitle(),
@@ -73,30 +80,44 @@ const ModifySearchPage = ({navigation, route}) => {
           value={name}
           placeholder=""
         />
-        {errorName ? (
+        {errorName && (
           <TextDefault style={styles.error}>
             Preencha no nome da pesquisa
           </TextDefault>
-        ) : null}
+        )}
       </Column>
       <Column>
         <InputValidator
           text="Data"
-          value={date}
+          value={''}
           onChange={setDate}
-          isPassword={true}
+          typeIcon="img"
+          hasIcon={true}
+          image={ImagesAssets.calendar}
+          onTapIcon={() => setShowDate(true)}
         />
-        {errorDate ? (
+        {errorDate && (
           <TextDefault style={styles.error}>Preencha a data</TextDefault>
-        ) : null}
+        )}
       </Column>
+      {showDate && (
+        <DateTimePicker
+          value={date}
+          positiveButton={{label: 'CONFIRMAR', textColor: 'green'}}
+          negativeButton={{label: 'CANCELAR', textColor: 'red'}}
+          mode="calendar"
+          onChange={(ev, date) => onChangeDate(ev, date)}
+          dateFormat="day month year"
+          locale="pt-BR"
+        />
+      )}
 
       <ImageButton
         text="Imagem"
         styleButton={styles.buttonImage}
         img={type == 'NEW' ? ImagesAssets.party : undefined}
       />
-      {type == 'UPDATE' ? (
+      {type == 'UPDATE' && (
         <Column style={styles.bottomButton}>
           <SquareButton
             icon="trash-can-outline"
@@ -108,7 +129,7 @@ const ModifySearchPage = ({navigation, route}) => {
             styleTitle={styles.buttonTrash.title}
           />
         </Column>
-      ) : undefined}
+      )}
 
       <ButtonDefault
         text={getButtonName()}

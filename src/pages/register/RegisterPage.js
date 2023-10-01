@@ -50,11 +50,11 @@ const RegisterPage = ({navigation}) => {
           value={email}
           placeholder="jurandir.pereira@hotmail.com"
         />
-        {errorEmail ? (
+        {errorEmail && (
           <TextDefault style={styles.error}>
             E-mail parece ser inválido
           </TextDefault>
-        ) : null}
+        )}
       </Column>
       <InputValidator
         text="Senha"
@@ -70,11 +70,11 @@ const RegisterPage = ({navigation}) => {
           onChange={setPasswordRep}
           isPassword={true}
         />
-        {errorPassword ? (
+        {errorPassword && (
           <TextDefault style={styles.error}>
             O campo repetir senha difere da senha
           </TextDefault>
-        ) : null}
+        )}
       </Column>
 
       <ButtonDefault

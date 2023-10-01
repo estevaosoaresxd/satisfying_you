@@ -37,11 +37,11 @@ const ForgotPasswordPage = ({navigation}) => {
           placeholder="jurandir.pereira@hotmail.com"
         />
         <View style={{height: 5}}></View>
-        {error ? (
+        {error && (
           <TextDefault style={styles.error}>
             E-mail parece ser inválido
           </TextDefault>
-        ) : null}
+        )}
       </Column>
       <ButtonDefault
         text="RECUPERAR"

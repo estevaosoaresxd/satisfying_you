@@ -5,4 +5,5 @@ export const ImagesAssets = {
   party: require('./party.png'),
   woman: require('./woman.png'),
   umbrella: require('./umbrella.png'),
+  calendar: require('./calendar.png'),
 };
