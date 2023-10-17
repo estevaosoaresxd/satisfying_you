@@ -6,6 +6,7 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
+import {sendPasswordResetEmail} from 'firebase/auth';
 
 const ForgotPasswordPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -17,11 +18,15 @@ const ForgotPasswordPage = ({navigation}) => {
     });
   }, [navigation]);
 
-  const sendEmail = () => {
+  const sendEmail = async () => {
     setError(false);
 
     if (validateEmail(email)) {
-      navigation.navigate('login');
+      await sendPasswordResetEmail(auth, email)
+        .then(value => {
+          navigation.navigate('login');
+        })
+        .catch(error => {});
     } else {
       setError(true);
     }
@@ -34,7 +39,7 @@ const ForgotPasswordPage = ({navigation}) => {
           text="E-mail"
           onChange={setEmail}
           value={email}
-          placeholder="jurandir.pereira@hotmail.com"
+          placeholder=""
         />
         <View style={{height: 5}}></View>
         {error && (

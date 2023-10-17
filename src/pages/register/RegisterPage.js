@@ -6,6 +6,8 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
+import {auth} from '../../firebase/config';
+import {createUserWithEmailAndPassword} from 'firebase/auth';
 
 const RegisterPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -20,7 +22,7 @@ const RegisterPage = ({navigation}) => {
     });
   }, [navigation]);
 
-  const register = () => {
+  const register = async () => {
     setErrorEmail(false);
     setErrorPassword(false);
 
@@ -41,7 +43,19 @@ const RegisterPage = ({navigation}) => {
     }
 
     if (isValid) {
-      navigation.navigate('login');
+      await createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+          navigation.navigate('login');
+
+          console.log(user);
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          console.log(errorMessage);
+        });
     }
   };
 
@@ -52,7 +66,7 @@ const RegisterPage = ({navigation}) => {
           text="E-mail"
           onChange={setEmail}
           value={email}
-          placeholder="jurandir.pereira@hotmail.com"
+          placeholder=""
         />
         {errorEmail && (
           <TextDefault style={styles.error}>

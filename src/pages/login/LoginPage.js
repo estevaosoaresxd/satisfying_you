@@ -8,17 +8,34 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
+import {signInWithEmailAndPassword} from 'firebase/auth';
+import {auth} from '../../firebase/config';
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
 
-  const login = () => {
+  const login = async () => {
     setError(false);
 
     if (validateEmail(email)) {
-      navigation.replace('drawer-home');
+      await signInWithEmailAndPassword(auth, email, password)
+        .then(userCredential => {
+          const user = userCredential.user;
+
+          console.log(user.uid);
+
+          navigation.replace('drawer-home');
+        })
+        .catch(error => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+
+          if (errorCode == 'auth/invalid-login-credentials') {
+            setError(true);
+          }
+        });
     } else {
       setError(true);
     }
@@ -37,7 +54,7 @@ const LoginPage = ({navigation}) => {
           text="E-mail"
           onChange={setEmail}
           value={email}
-          placeholder="jurandir.pereira@hotmail.com"
+          placeholder=""
         />
         <View style={{height: 10}}></View>
         <InputValidator

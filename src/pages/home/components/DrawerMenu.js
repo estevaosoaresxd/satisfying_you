@@ -7,9 +7,16 @@ import {TextDefault} from '../../../components/TextDefault';
 import {Container} from '../../../components/Container';
 import {Row} from '../../../components/Row';
 import {Column} from '../../../components/Column';
+import {signOut} from 'firebase/auth';
+import {auth} from '../../../firebase/config';
 
 export const DrawerMenu = props => {
   const {navigation} = props;
+
+  const signOutUser = async () => {
+    await signOut(auth);
+    navigation.replace('login');
+  };
 
   return (
     <Container style={styles.container}>
@@ -27,9 +34,7 @@ export const DrawerMenu = props => {
         </TouchableOpacity>
       </Column>
 
-      <TouchableOpacity
-        onPress={() => navigation.replace('login')}
-        style={styles.button}>
+      <TouchableOpacity onPress={signOutUser} style={styles.button}>
         <Row style={styles.row}>
           <Icon name="logout" style={styles.icon} />
           <View style={{width: 10}}></View>
