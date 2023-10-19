@@ -79,7 +79,7 @@ const RegisterPage = ({navigation}) => {
         value={password}
         onChange={setPassword}
         isPassword={true}
-        placeholder="*********"
+        placeholder=""
       />
       <Column>
         <InputValidator

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 import baseSvg from './../../../assets/svg/celebration.svg';
 
@@ -9,6 +9,8 @@ import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
 import {ImagesAssets} from '../../../assets/images/ImagesAssets';
+import {collection, doc, onSnapshot, query} from 'firebase/firestore';
+import {firestore} from '../../firebase/config';
 
 const DATA = [
   {
@@ -87,6 +89,22 @@ const HomePage = ({navigation, route}) => {
       }}
     />
   );
+
+  const getAllSurveys = async () => {
+    const q = query(collection(firestore, 'surveys'));
+
+    onSnapshot(q, querySnapshot => {
+      querySnapshot.forEach(doc => {
+        const survey = doc.data();
+
+        console.log(survey);
+      });
+    });
+  };
+
+  useEffect(() => {
+    getAllSurveys();
+  }, []);
 
   return (
     <Container style={styles.container}>

@@ -10,6 +10,14 @@ import {ImagesAssets} from '../../../assets/images/ImagesAssets';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
 import DateTimePicker from '@react-native-community/datetimepicker';
+import {
+  addDoc,
+  collection,
+  deleteDoc,
+  doc,
+  updateDoc,
+} from 'firebase/firestore';
+import {firestore} from '../../firebase/config';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
@@ -49,7 +57,63 @@ const ModifySearchPage = ({navigation, route}) => {
     }
   };
 
-  const onTapButton = () => {
+  const onTapButtonType = async () => {
+    switch (type) {
+      case 'NEW':
+        await onTapRegister();
+        break;
+      case 'UPDATE':
+        await onTapUpdate();
+        break;
+    }
+  };
+
+  const onTapRegister = async () => {
+    const document = {
+      name: name,
+      date: new Date().toUTCString(),
+      image: 'link image',
+    };
+
+    var teste = collection(firestore, 'surveys');
+
+    await addDoc(teste, document)
+      .then(e => {
+        console.log(e, 'sucess');
+        navigation.navigate('home');
+      })
+      .catch(e => console.log(e, 'error'));
+  };
+
+  const onTapUpdate = async () => {
+    const document = {
+      name: name,
+      date: new Date().toUTCString(),
+      image: 'link image',
+    };
+
+    var teste = doc(firestore, 'surveys', 'Tei2tGtH2YKsW1dqKdxm');
+
+    await updateDoc(teste, document)
+      .then(e => {
+        console.log(e, 'sucess');
+        navigation.navigate('home');
+      })
+      .catch(e => console.log(e, 'error'));
+  };
+
+  const onTapDelete = async () => {
+    var teste = doc(firestore, 'surveys', 'Tei2tGtH2YKsW1dqKdxm');
+
+    await deleteDoc(teste)
+      .then(e => {
+        console.log(e, 'sucess');
+        navigation.navigate('home');
+      })
+      .catch(e => console.log(e, 'error'));
+  };
+
+  const onTapButton = async () => {
     setErrorName(false);
     setErrorCalendar(false);
 
@@ -66,7 +130,7 @@ const ModifySearchPage = ({navigation, route}) => {
     }
 
     if (isValid) {
-      navigation.navigate('home');
+      onTapButtonType();
     }
   };
 
@@ -154,7 +218,7 @@ const ModifySearchPage = ({navigation, route}) => {
         showAlert={showAlert}
         setShowAlert={setShowAlert}
         onPressCancel={() => navigation.pop()}
-        onPressConfirm={() => navigation.navigate('home')}
+        onPressConfirm={() => onTapDelete()}
       />
     </Container>
   );

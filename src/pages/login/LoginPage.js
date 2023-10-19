@@ -63,7 +63,7 @@ const LoginPage = ({navigation}) => {
           onChange={setPassword}
           onSubmit={login}
           isPassword={true}
-          placeholder="*********"
+          placeholder=""
         />
         {error ? (
           <TextDefault style={styles.error}>
