@@ -6,7 +6,7 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
-import {sendPasswordResetEmail} from 'firebase/auth';
+import {AuthForgotPassword} from '../../services/auth_service';
 
 const ForgotPasswordPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -22,7 +22,7 @@ const ForgotPasswordPage = ({navigation}) => {
     setError(false);
 
     if (validateEmail(email)) {
-      await sendPasswordResetEmail(auth, email)
+      await AuthForgotPassword(email)
         .then(value => {
           navigation.navigate('login');
         })

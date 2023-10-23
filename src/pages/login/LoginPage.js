@@ -8,8 +8,7 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
-import {signInWithEmailAndPassword} from 'firebase/auth';
-import {auth} from '../../firebase/config';
+import {AuthLogin} from '../../services/auth_service';
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -20,7 +19,7 @@ const LoginPage = ({navigation}) => {
     setError(false);
 
     if (validateEmail(email)) {
-      await signInWithEmailAndPassword(auth, email, password)
+      await AuthLogin(email, password)
         .then(userCredential => {
           const user = userCredential.user;
 

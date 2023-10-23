@@ -11,13 +11,10 @@ import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
 import DateTimePicker from '@react-native-community/datetimepicker';
 import {
-  addDoc,
-  collection,
-  deleteDoc,
-  doc,
-  updateDoc,
-} from 'firebase/firestore';
-import {firestore} from '../../firebase/config';
+  addSurvey,
+  deleteSurvey,
+  updateSurvey,
+} from '../../services/firestore_service';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
@@ -75,9 +72,7 @@ const ModifySearchPage = ({navigation, route}) => {
       image: 'link image',
     };
 
-    var teste = collection(firestore, 'surveys');
-
-    await addDoc(teste, document)
+    await addSurvey(document)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');
@@ -92,9 +87,7 @@ const ModifySearchPage = ({navigation, route}) => {
       image: 'link image',
     };
 
-    var teste = doc(firestore, 'surveys', 'Tei2tGtH2YKsW1dqKdxm');
-
-    await updateDoc(teste, document)
+    await updateSurvey('Tei2tGtH2YKsW1dqKdxm', document)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');
@@ -103,9 +96,7 @@ const ModifySearchPage = ({navigation, route}) => {
   };
 
   const onTapDelete = async () => {
-    var teste = doc(firestore, 'surveys', 'Tei2tGtH2YKsW1dqKdxm');
-
-    await deleteDoc(teste)
+    await deleteSurvey('Tei2tGtH2YKsW1dqKdxm')
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');

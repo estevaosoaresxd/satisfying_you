@@ -6,8 +6,7 @@ import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../utils/validators/email_validator';
-import {auth} from '../../firebase/config';
-import {createUserWithEmailAndPassword} from 'firebase/auth';
+import {AuthRegister} from '../../services/auth_service';
 
 const RegisterPage = ({navigation}) => {
   const [email, setEmail] = useState('');
@@ -43,7 +42,7 @@ const RegisterPage = ({navigation}) => {
     }
 
     if (isValid) {
-      await createUserWithEmailAndPassword(auth, email, password)
+      await AuthRegister(email, password)
         .then(userCredential => {
           const user = userCredential.user;
           navigation.navigate('login');
