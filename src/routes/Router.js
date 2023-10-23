@@ -2,7 +2,7 @@ import * as React from 'react';
 
 // NAVIGATOR
 import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // SCREENS
@@ -16,7 +16,7 @@ import {SatisfyingCollectPage} from '../pages/satisfying_collect/SatisfyingColle
 import {DrawerMenu} from '../pages/home/components/DrawerMenu';
 import {ChartReportPage} from '../pages/chart_report/ChartReportPage';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 const navigationOptions = () => ({
