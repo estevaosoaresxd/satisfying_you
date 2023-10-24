@@ -7,7 +7,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
-import {validateEmail} from '../../utils/validators/email_validator';
+import {validateEmail} from '../../shared/utils/validators/email_validator';
 import {AuthLogin} from '../../services/auth_service';
 
 const LoginPage = ({navigation}) => {

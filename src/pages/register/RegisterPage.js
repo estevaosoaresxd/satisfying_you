@@ -5,7 +5,7 @@ import {InputValidator} from '../../components/InputValidator';
 import {TextDefault} from '../../components/TextDefault';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
-import {validateEmail} from '../../utils/validators/email_validator';
+import {validateEmail} from '../../shared/utils/validators/email_validator';
 import {AuthRegister} from '../../services/auth_service';
 
 const RegisterPage = ({navigation}) => {

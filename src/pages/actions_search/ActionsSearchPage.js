@@ -1,4 +1,4 @@
-import * as React from 'react';
+import {useEffect} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {Row} from '../../components/Row';
@@ -9,7 +9,7 @@ import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
 const ActionsSearchPage = ({navigation, route}) => {
   const {survey} = route.params;
 
-  React.useEffect(() => {
+  useEffect(() => {
     navigation.setOptions({
       title: survey.name ?? 'Sem título',
     });

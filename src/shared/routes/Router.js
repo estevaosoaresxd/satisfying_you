@@ -6,15 +6,15 @@ import {createStackNavigator} from '@react-navigation/stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
 // SCREENS
-import {LoginPage} from '../pages/login/LoginPage';
-import {HomePage} from '../pages/home/HomePage';
-import {RegisterPage} from '../pages/register/RegisterPage';
-import {ForgotPasswordPage} from '../pages/forgot_password/ForgotPasswordPage';
-import {ModifySearchPage} from '../pages/modify_search/ModifySearchPage';
-import {ActionsSearchPage} from '../pages/actions_search/ActionsSearchPage';
-import {SatisfyingCollectPage} from '../pages/satisfying_collect/SatisfyingCollectPage';
-import {DrawerMenu} from '../pages/home/components/DrawerMenu';
-import {ChartReportPage} from '../pages/chart_report/ChartReportPage';
+import {LoginPage} from '../../pages/login/LoginPage';
+import {HomePage} from '../../pages/home/HomePage';
+import {RegisterPage} from '../../pages/register/RegisterPage';
+import {ForgotPasswordPage} from '../../pages/forgot_password/ForgotPasswordPage';
+import {ModifySearchPage} from '../../pages/modify_search/ModifySearchPage';
+import {ActionsSearchPage} from '../../pages/actions_search/ActionsSearchPage';
+import {SatisfyingCollectPage} from '../../pages/satisfying_collect/SatisfyingCollectPage';
+import {ChartReportPage} from '../../pages/chart_report/ChartReportPage';
+import {DrawerMenu} from '../../pages/home/components/DrawerMenu';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();

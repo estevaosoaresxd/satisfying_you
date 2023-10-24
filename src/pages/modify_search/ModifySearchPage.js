@@ -15,7 +15,7 @@ import {
   deleteSurvey,
   updateSurvey,
 } from '../../services/firestore_service';
-import {openCamera, openImagePicker} from '../../utils/image_picker';
+import {openCamera, openImagePicker} from '../../shared/utils/image_picker';
 import {
   getBlobOfUrl,
   saveImage,
