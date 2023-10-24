@@ -15,10 +15,14 @@ import {
   deleteSurvey,
   updateSurvey,
 } from '../../services/firestore_service';
+import {openCamera, openImagePicker} from '../../utils/image_picker';
+import {saveImage} from '../../services/storage_service';
+import {getDownloadURL} from 'firebase/storage';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
   const [calendar, setCalendar] = useState('');
+  const [image, setImage] = useState(null);
   const [errorName, setErrorName] = useState(false);
   const [errorCalendar, setErrorCalendar] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -33,6 +37,10 @@ const ModifySearchPage = ({navigation, route}) => {
 
     if (date) {
       setCalendar(date);
+    }
+
+    if (img) {
+      setImage(img);
     }
   };
 
@@ -69,8 +77,19 @@ const ModifySearchPage = ({navigation, route}) => {
     const document = {
       name: name,
       date: new Date().toUTCString(),
-      image: 'link image',
     };
+
+    if (image) {
+      const arquive = await fetch(img.uri);
+      const blob = await arquive.blob();
+
+      var ref = await saveImage(img.name, blob).then(async res => res.ref);
+      var url = await getDownloadURL(ref).then(url => url);
+
+      if (url) {
+        document['image'] = url;
+      }
+    }
 
     await addSurvey(document)
       .then(e => {
@@ -84,8 +103,20 @@ const ModifySearchPage = ({navigation, route}) => {
     const document = {
       name: name,
       date: new Date().toUTCString(),
-      image: 'link image',
+      image: image,
     };
+
+    if (image != img) {
+      const arquive = await fetch(img.uri);
+      const blob = await arquive.blob();
+
+      var ref = await saveImage(img.name, blob).then(async res => res.ref);
+      var url = await getDownloadURL(ref).then(url => url);
+
+      if (url) {
+        document.image = url;
+      }
+    }
 
     await updateSurvey('Tei2tGtH2YKsW1dqKdxm', document)
       .then(e => {
@@ -123,6 +154,20 @@ const ModifySearchPage = ({navigation, route}) => {
     if (isValid) {
       onTapButtonType();
     }
+  };
+
+  const onTapImageButton = async () => {
+    await openCamera()
+      .then(res => {
+        if (res.assets && res.assets.length > 0) {
+          let {fileName, type, originalPath, uri} = res.assets[0];
+
+          setImage(uri);
+        } else if (res.didCancel) {
+          console.log('canceled');
+        }
+      })
+      .catch(e => console.log('error', e));
   };
 
   const onChangeDate = (ev, date) => {
@@ -182,7 +227,8 @@ const ModifySearchPage = ({navigation, route}) => {
       <ImageButton
         text="Imagem"
         styleButton={styles.buttonImage}
-        img={type != 'NEW' ? img : undefined}
+        img={image}
+        onTap={onTapImageButton}
       />
 
       {type == 'UPDATE' && (
