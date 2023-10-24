@@ -8,7 +8,7 @@ import {Container} from '../../../components/Container';
 import {Row} from '../../../components/Row';
 import {Column} from '../../../components/Column';
 import {signOut} from 'firebase/auth';
-import {auth} from '../../../firebase/config';
+import {auth} from '../../../shared/firebase/config';
 
 export const DrawerMenu = props => {
   const {navigation} = props;

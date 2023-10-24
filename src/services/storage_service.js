@@ -2,7 +2,7 @@ import {ref, uploadBytes, deleteObject, updateMetadata} from 'firebase/storage';
 
 import {AuthData} from './auth_service';
 
-const {storage} = require('../firebase/config');
+const {storage} = require('../shared/firebase/config');
 
 const images = 'images';
 const userInfo = AuthData();
@@ -28,4 +28,9 @@ const updateImage = async (name, blob) => {
   return await updateMetadata(imageRef, blob);
 };
 
-export {saveImage, deleteImage, updateImage};
+const getBlobOfUrl = async url => {
+  const arquive = await fetch(url);
+  return await arquive.blob();
+};
+
+export {saveImage, deleteImage, updateImage, getBlobOfUrl};

@@ -5,7 +5,7 @@ import {
   signOut,
 } from 'firebase/auth';
 
-import {auth} from '../firebase/config';
+import {auth} from '../shared/firebase/config';
 
 const AuthLogin = async (email, password) => {
   return await signInWithEmailAndPassword(auth, email, password);

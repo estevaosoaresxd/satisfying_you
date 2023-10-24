@@ -16,7 +16,11 @@ import {
   updateSurvey,
 } from '../../services/firestore_service';
 import {openCamera, openImagePicker} from '../../utils/image_picker';
-import {saveImage} from '../../services/storage_service';
+import {
+  getBlobOfUrl,
+  saveImage,
+  updateImage,
+} from '../../services/storage_service';
 import {getDownloadURL} from 'firebase/storage';
 
 const ModifySearchPage = ({navigation, route}) => {
@@ -80,11 +84,9 @@ const ModifySearchPage = ({navigation, route}) => {
     };
 
     if (image) {
-      const arquive = await fetch(image);
-      const blob = await arquive.blob();
-
-      var ref = await saveImage('teste', blob).then(async res => res.ref);
-      var url = await getDownloadURL(ref).then(url => url);
+      const blob = await getBlobOfUrl(image);
+      const ref = await saveImage(`${name}`, blob).then(async res => res.ref);
+      const url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
         document['image'] = url;
@@ -107,10 +109,9 @@ const ModifySearchPage = ({navigation, route}) => {
     };
 
     if (image != img) {
-      const arquive = await fetch(img.uri);
-      const blob = await arquive.blob();
+      const blob = await getBlobOfUrl(image);
 
-      var ref = await saveImage(img.name, blob).then(async res => res.ref);
+      var ref = await updateImage(img.name, blob).then(async res => res.ref);
       var url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
@@ -118,7 +119,7 @@ const ModifySearchPage = ({navigation, route}) => {
       }
     }
 
-    await updateSurvey('Tei2tGtH2YKsW1dqKdxm', document)
+    await updateSurvey(survey.id, document)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');

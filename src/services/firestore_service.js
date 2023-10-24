@@ -9,7 +9,7 @@ import {
   deleteDoc,
 } from 'firebase/firestore';
 
-import {firestore} from '../firebase/config';
+import {firestore} from '../shared/firebase/config';
 
 import {AuthData} from './auth_service';
 
