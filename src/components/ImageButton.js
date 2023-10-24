@@ -17,7 +17,7 @@ const ImageButton = ({
         style={{...styles.gestureDetector, ...styleButton}}
         onPress={onTap}>
         {img != undefined ? (
-          <Image style={styles.image} source={img} />
+          <Image style={styles.image} source={img ? {uri: img} : null} />
         ) : (
           <TextDefault style={{...styles.textButton, ...styleTextButton}}>
             Câmera/Galeria de imagens

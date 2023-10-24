@@ -28,19 +28,19 @@ const ModifySearchPage = ({navigation, route}) => {
   const [showAlert, setShowAlert] = useState(false);
   const [showDate, setShowDate] = useState(false);
 
-  const {type, title, date, img} = route.params;
+  const {type, survey} = route.params;
 
   const setValuesInInput = () => {
-    if (title) {
-      setName(title);
+    if (survey.name) {
+      setName(survey.name);
     }
 
-    if (date) {
-      setCalendar(date);
+    if (survey.date) {
+      setCalendar(survey.date);
     }
 
-    if (img) {
-      setImage(img);
+    if (survey.image) {
+      setImage(survey.image);
     }
   };
 
@@ -80,10 +80,10 @@ const ModifySearchPage = ({navigation, route}) => {
     };
 
     if (image) {
-      const arquive = await fetch(img.uri);
+      const arquive = await fetch(image);
       const blob = await arquive.blob();
 
-      var ref = await saveImage(img.name, blob).then(async res => res.ref);
+      var ref = await saveImage('teste', blob).then(async res => res.ref);
       var url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
@@ -180,7 +180,9 @@ const ModifySearchPage = ({navigation, route}) => {
       title: getTitle(),
     });
 
-    setValuesInInput();
+    if (survey) {
+      setValuesInInput();
+    }
   }, [navigation]);
 
   return (

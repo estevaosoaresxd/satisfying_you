@@ -6,17 +6,32 @@ import {Row} from '../../components/Row';
 import {SquareButton} from '../../components/SquareButton';
 import {Column} from '../../components/Column';
 import baseSvg from './../../../assets/svg/horrible.svg';
+import {updateSurvey} from '../../services/firestore_service';
 
 const {width, height} = Dimensions.get('window');
 
 const SatisfyingCollectPage = ({navigation, route}) => {
   const [showMessage, setShowMessage] = useState(false);
-  const {title} = route.params;
+  const {survey} = route.params;
 
-  const onTapCollect = () => {
+  const onTapCollect = async key => {
     setShowMessage(true);
 
     setTimeout(() => setShowMessage(false), 3000);
+
+    await sendVote(key);
+  };
+
+  const sendVote = async key => {
+    const {id, name, date, image, terrible, bad, neutral, good, great} = survey;
+
+    const document = {name, date, image, terrible, bad, neutral, good, great};
+
+    if (document[key] != null) {
+      document[key] += 1;
+    }
+
+    await updateSurvey(id, document);
   };
 
   const satisfyingButtons = [
@@ -26,30 +41,35 @@ const SatisfyingCollectPage = ({navigation, route}) => {
       title: 'Péssimo',
       icon: 'emoticon-sad-outline',
       iconColor: '#D71616',
+      key: 'terrible',
     },
     {
       type: 'community',
       title: 'Ruim',
       icon: 'emoticon-sad-outline',
       iconColor: '#FF360A',
+      key: 'bad',
     },
     {
       type: 'community',
       title: 'Neutro',
       icon: 'emoticon-neutral-outline',
       iconColor: '#FFC632',
+      key: 'neutral',
     },
     {
       type: 'community',
       title: 'Bom',
       icon: 'emoticon-happy-outline',
       iconColor: '#37BD6D',
+      key: 'good',
     },
     {
       type: 'community',
       title: 'Excelente',
       icon: 'emoticon-excited-outline',
       iconColor: '#25BC22',
+      key: 'great',
     },
   ];
 
@@ -74,7 +94,7 @@ const SatisfyingCollectPage = ({navigation, route}) => {
       ) : (
         <Column style={styles.container}>
           <TextDefault style={styles.title}>
-            O que você achou do {title}?
+            O que você achou do {survey.name}?
           </TextDefault>
           <View style={{height: height * 0.125}} />
           <Row>
@@ -84,7 +104,7 @@ const SatisfyingCollectPage = ({navigation, route}) => {
                 myKey={key}
                 icon={button.icon}
                 title={button.title}
-                onTap={() => onTapCollect()}
+                onTap={() => onTapCollect(button.key)}
                 BaseSvg={button.baseSvg}
                 typeIcon={button.type}
                 styleButton={styles.button}

@@ -7,11 +7,11 @@ import ContractEdit from './../../../assets/svg/contract-edit.svg';
 import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
 
 const ActionsSearchPage = ({navigation, route}) => {
-  const {title, date, img} = route.params;
+  const {survey} = route.params;
 
   React.useEffect(() => {
     navigation.setOptions({
-      title: title ?? 'Sem título',
+      title: survey.name ?? 'Sem título',
     });
   }, [navigation]);
 
@@ -29,9 +29,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           onTap={() =>
             navigation.navigate('modify-search', {
               type: 'UPDATE',
-              title: title,
-              date: date,
-              img: img,
+              survey,
             })
           }
         />
@@ -45,7 +43,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleButton={styles.button}
           onTap={() =>
             navigation.navigate('satisfying-collect', {
-              title: title,
+              survey,
             })
           }
         />
@@ -55,7 +53,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
-          onTap={() => navigation.navigate('chart-report')}
+          onTap={() => navigation.navigate('chart-report', {survey})}
         />
       </Row>
     </Container>

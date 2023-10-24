@@ -1,81 +1,32 @@
-import React, {useEffect} from 'react';
+import {useEffect, useState} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
-import baseSvg from './../../../assets/svg/celebration.svg';
 
 // COMPONENTS
 import {Container} from '../../components/Container';
 import {ButtonDefault} from '../../components/ButtonDefault';
 import {InputSearch} from '../../components/InputSearch';
 import {SquareButton} from '../../components/SquareButton';
-import {AlertConfirm} from '../../components/AlertConfirm';
-import {ImagesAssets} from '../../../assets/images/ImagesAssets';
-import {collection, doc, onSnapshot, query} from 'firebase/firestore';
-import {firestore} from '../../firebase/config';
 
-const DATA = [
-  {
-    typeIcon: 'img',
-    title: 'SECOMP 2023',
-    description: '10/10/2022',
-    image: ImagesAssets.devices,
-    iconColor: '#704141',
-  },
-  {
-    typeIcon: 'img',
-    title: 'UBUNTU 2022',
-    description: '05/06/2022',
-    image: ImagesAssets.groups,
-    iconColor: '#383838',
-  },
-  {
-    typeIcon: 'img',
-    title: 'MENINAS CPU',
-    image: ImagesAssets.woman,
-    description: '01/04/2022',
-    iconColor: '#D71616',
-  },
-  {
-    typeIcon: 'img',
-    title: 'COTB',
-    image: ImagesAssets.umbrella,
-    description: '01/04/2022',
-    iconColor: '#37BD6D',
-  },
-  {
-    typeIcon: 'img',
-    title: 'CARNAVAL',
-    description: '15/02/2020',
-    image: ImagesAssets.party,
-    iconColor: '#C60EB3',
-  },
-];
+// FIREBASE
+import {onSnapshot} from 'firebase/firestore';
+import {getQuerySurvey} from '../../services/firestore_service';
 
 const HomePage = ({navigation, route}) => {
-  const renderItem = ({
-    icon,
-    typeIcon,
-    BaseSvg,
-    image,
-    title,
-    description,
-    iconColor,
-  }) => (
+  const [surveys, setSurveys] = useState([]);
+
+  const renderItem = survey => (
     <SquareButton
-      icon={icon}
-      title={title}
+      title={survey.name}
       onTap={() =>
         navigation.navigate('actions-search', {
-          title: title,
-          date: description,
-          img: image,
+          survey: survey,
         })
       }
-      BaseSvg={BaseSvg}
-      image={image}
-      typeIcon={typeIcon}
-      description={description}
+      image={survey.image}
+      typeIcon="img"
+      description={survey.date}
       styleButton={styles.flatlist.button}
-      styleIcon={{...styles.flatlist.button.icon, color: iconColor}}
+      styleIcon={{...styles.flatlist.button.icon}}
       styleTitle={styles.flatlist.button.title}
       styleDescription={styles.flatlist.description}
     />
@@ -91,14 +42,17 @@ const HomePage = ({navigation, route}) => {
   );
 
   const getAllSurveys = async () => {
-    const q = query(collection(firestore, 'surveys'));
+    onSnapshot(getQuerySurvey(), querySnapshot => {
+      const surveys = [];
 
-    onSnapshot(q, querySnapshot => {
       querySnapshot.forEach(doc => {
-        const survey = doc.data();
-
-        console.log(survey);
+        surveys.push({
+          id: doc.id,
+          ...doc.data(),
+        });
       });
+
+      setSurveys(surveys);
     });
   };
 
@@ -114,7 +68,7 @@ const HomePage = ({navigation, route}) => {
       />
       <FlatList
         horizontal={true}
-        data={DATA}
+        data={surveys}
         renderItem={({item}) => renderItem(item)}
         ItemSeparatorComponent={() => separator}
         style={styles.flatlist}

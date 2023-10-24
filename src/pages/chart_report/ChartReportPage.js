@@ -1,39 +1,33 @@
-import React from 'react';
+import {useState, useEffect} from 'react';
 import {Image, StyleSheet, View} from 'react-native';
 import {Container} from '../../components/Container';
 import {Row} from '../../components/Row';
 import {Column} from '../../components/Column';
 import {TextDefault} from '../../components/TextDefault';
 import {PieChart} from 'react-native-chart-kit';
-
 import {Dimensions} from 'react-native';
 const screenWidth = Dimensions.get('window').width;
 
-const data = [
+const options = [
   {
-    name: 'Excelente',
-    search: 20,
-    color: '#F1CE7E',
+    name: 'terrible',
+    color: '#53D8D8',
   },
   {
-    name: 'Bom',
-    search: 25,
-    color: '#6994FE',
-  },
-  {
-    name: 'Neutro',
-    search: 30,
-    color: '#5FCDA4',
-  },
-  {
-    name: 'Ruim',
-    search: 20,
+    name: 'bad',
     color: '#EA7288',
   },
   {
-    name: 'Péssimo',
-    search: 15,
-    color: '#53D8D8',
+    name: 'neutral',
+    color: '#5FCDA4',
+  },
+  {
+    name: 'good',
+    color: '#6994FE',
+  },
+  {
+    name: 'great',
+    color: '#F1CE7E',
   },
 ];
 
@@ -49,11 +43,45 @@ const chartConfig = {
 };
 
 const ChartReportPage = ({navigation, route}) => {
-  React.useEffect(() => {
+  const {survey} = route.params;
+
+  const [allVotes, setAllVotes] = useState([
+    {
+      name: 'noValue',
+      value: 1,
+      color: '#f0f0f0',
+    },
+  ]);
+
+  const listOfData = () => {
+    const data = [];
+
+    options.forEach(e => {
+      const value = survey[e.name];
+
+      data.push({
+        ...e,
+        value,
+      });
+    });
+
+    return data;
+  };
+
+  useEffect(() => {
     navigation.setOptions({
       title: 'Relatório',
     });
   }, [navigation]);
+
+  useEffect(() => {
+    const allData = listOfData();
+    const allHaveVoted = allData.filter(e => e.value > 0);
+
+    console.log(allData);
+
+    if (allHaveVoted.length > 0) setAllVotes(allData);
+  }, []);
 
   const AvalitionType = ({title, colorSquare}) => {
     return (
@@ -73,11 +101,11 @@ const ChartReportPage = ({navigation, route}) => {
             height: 300,
           }}>
           <PieChart
-            data={data}
+            data={allVotes}
             width={500}
             height={300}
             chartConfig={chartConfig}
-            accessor={'search'}
+            accessor={'value'}
             backgroundColor={'transparent'}
             hasLegend={false}
             absolute={false}

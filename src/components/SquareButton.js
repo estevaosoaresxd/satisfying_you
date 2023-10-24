@@ -31,7 +31,7 @@ const SquareButton = ({
       case 'svg':
         return <BaseSvg width={80} height={80} />;
       case 'img':
-        return <Image style={styles.image} source={image} />;
+        return <Image style={styles.image} source={{uri: image}} />;
       default:
         return (
           <Icon name={icon} size={120} style={{...styles.icon, ...styleIcon}} />
