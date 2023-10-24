@@ -1,10 +1,28 @@
-import {createContext, useContext} from 'react';
+import {createContext, useState, useContext} from 'react';
 
-const SurveysContext = createContext([]);
+const SurveysContext = createContext({});
 
-const SurveysContextProvider = ({children, survey}) => {
+const SurveysProvider = ({children}) => {
+  const [surveys, setSurveys] = useState([]);
+
+  const findSurveyById = id => {
+    if (surveys) {
+      const survey = surveys.filter(survey => survey.id == id);
+
+      return survey[0];
+    }
+
+    return null;
+  };
+
+  const updateSurveys = data => {
+    setSurveys(data);
+  };
+
   return (
-    <SurveysContext.Provider value={survey}>{children}</SurveysContext.Provider>
+    <SurveysContext.Provider value={{surveys, updateSurveys, findSurveyById}}>
+      {children}
+    </SurveysContext.Provider>
   );
 };
 
@@ -18,18 +36,4 @@ const useSurveys = () => {
   return context;
 };
 
-const findSurveyById = id => {
-  const surveys = useSurveys();
-
-  console.log(surveys);
-
-  if (surveys) {
-    const survey = surveys.filter(survey => survey.id == id);
-
-    return survey[0];
-  }
-
-  return null;
-};
-
-export {SurveysContextProvider, useSurveys, findSurveyById};
+export {SurveysProvider, useSurveys};

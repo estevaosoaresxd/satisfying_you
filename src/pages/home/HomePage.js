@@ -1,4 +1,4 @@
-import {useEffect, useState} from 'react';
+import {useEffect} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 
 // COMPONENTS
@@ -10,16 +10,17 @@ import {SquareButton} from '../../components/SquareButton';
 // FIREBASE
 import {onSnapshot} from 'firebase/firestore';
 import {getQuerySurvey} from '../../services/firestore_service';
+import {useSurveys} from '../../modules/SurveysContext';
 
 const HomePage = ({navigation, route}) => {
-  const [surveys, setSurveys] = useState([]);
+  const {surveys, updateSurveys} = useSurveys();
 
   const renderItem = survey => (
     <SquareButton
       title={survey.name}
       onTap={() =>
         navigation.navigate('actions-search', {
-          survey: survey,
+          id: survey.id,
         })
       }
       image={survey.image}
@@ -52,7 +53,7 @@ const HomePage = ({navigation, route}) => {
         });
       });
 
-      setSurveys(surveys);
+      updateSurveys(surveys);
     });
   };
 
@@ -66,6 +67,7 @@ const HomePage = ({navigation, route}) => {
         placeholder="Insira o termo de busca..."
         styleRow={styles.inputSearch}
       />
+
       <FlatList
         horizontal={true}
         data={surveys}

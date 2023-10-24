@@ -7,12 +7,15 @@ import {SquareButton} from '../../components/SquareButton';
 import {Column} from '../../components/Column';
 import baseSvg from './../../../assets/svg/horrible.svg';
 import {updateSurvey} from '../../services/firestore_service';
+import {useSurveys} from '../../modules/SurveysContext';
 
 const {width, height} = Dimensions.get('window');
 
 const SatisfyingCollectPage = ({navigation, route}) => {
+  const {id} = route.params;
   const [showMessage, setShowMessage] = useState(false);
-  const {survey} = route.params;
+  const {findSurveyById, surveys} = useSurveys();
+  const survey = useMemo(() => findSurveyById(id), [surveys]);
 
   const onTapCollect = async key => {
     setShowMessage(true);

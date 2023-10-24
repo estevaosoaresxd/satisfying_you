@@ -6,6 +6,7 @@ import {Column} from '../../components/Column';
 import {TextDefault} from '../../components/TextDefault';
 import {PieChart} from 'react-native-chart-kit';
 import {Dimensions} from 'react-native';
+import {useSurveys} from '../../modules/SurveysContext';
 const screenWidth = Dimensions.get('window').width;
 
 const options = [
@@ -43,7 +44,9 @@ const chartConfig = {
 };
 
 const ChartReportPage = ({navigation, route}) => {
-  const {survey} = route.params;
+  const {id} = route.params;
+  const {findSurveyById, surveys} = useSurveys();
+  const survey = useMemo(() => findSurveyById(id), [surveys]);
 
   const [allVotes, setAllVotes] = useState([
     {

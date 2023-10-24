@@ -22,6 +22,7 @@ import {
   updateImage,
 } from '../../services/storage_service';
 import {getDownloadURL} from 'firebase/storage';
+import {useSurveys} from '../../modules/SurveysContext';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
@@ -31,10 +32,13 @@ const ModifySearchPage = ({navigation, route}) => {
   const [errorCalendar, setErrorCalendar] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
   const [showDate, setShowDate] = useState(false);
+  const {findSurveyById} = useSurveys();
 
-  const {type, survey} = route.params;
+  const {type, id} = route.params;
 
   const setValuesInInput = () => {
+    const survey = findSurveyById(id);
+
     if (survey.name) {
       setName(survey.name);
     }
@@ -181,7 +185,7 @@ const ModifySearchPage = ({navigation, route}) => {
       title: getTitle(),
     });
 
-    if (survey) {
+    if (id) {
       setValuesInInput();
     }
   }, [navigation]);

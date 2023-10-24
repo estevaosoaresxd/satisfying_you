@@ -14,7 +14,6 @@ import {firestore} from '../shared/firebase/config';
 import {AuthData} from './auth_service';
 
 const surveys = 'surveys';
-const users = 'users';
 const userInfo = AuthData();
 
 const pathSurvey = () => `${surveys}/${userInfo.uid}/${surveys}`;

@@ -1,13 +1,16 @@
-import {useEffect} from 'react';
+import {useEffect, useMemo} from 'react';
 import {StyleSheet} from 'react-native';
 import {Container} from '../../components/Container';
 import {Row} from '../../components/Row';
 import {SquareButton} from '../../components/SquareButton';
 import ContractEdit from './../../../assets/svg/contract-edit.svg';
 import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
+import {useSurveys} from '../../modules/SurveysContext';
 
 const ActionsSearchPage = ({navigation, route}) => {
-  const {survey} = route.params;
+  const {id} = route.params;
+  const {findSurveyById, surveys} = useSurveys();
+  const survey = useMemo(() => findSurveyById(id), [surveys]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -29,7 +32,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           onTap={() =>
             navigation.navigate('modify-search', {
               type: 'UPDATE',
-              survey,
+              id,
             })
           }
         />
@@ -43,7 +46,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleButton={styles.button}
           onTap={() =>
             navigation.navigate('satisfying-collect', {
-              survey,
+              id,
             })
           }
         />
@@ -53,7 +56,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
-          onTap={() => navigation.navigate('chart-report', {survey})}
+          onTap={() => navigation.navigate('chart-report', {id})}
         />
       </Row>
     </Container>
