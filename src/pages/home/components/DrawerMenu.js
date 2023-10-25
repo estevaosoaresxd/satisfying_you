@@ -9,12 +9,11 @@ import {Row} from '../../../components/Row';
 import {Column} from '../../../components/Column';
 import {useAuth} from '../../../modules/AuthContext';
 
-export const DrawerMenu = props => {
-  const {navigation} = props;
-  const {signOutAuth} = useAuth();
+export const DrawerMenu = ({navigation}) => {
+  const {signOutAuth, user} = useAuth();
 
   const signOutUser = async () => {
-    signOutAuth();
+    await signOutAuth();
 
     navigation.replace('login');
   };
@@ -22,7 +21,7 @@ export const DrawerMenu = props => {
   return (
     <Container style={styles.container}>
       <Column>
-        <TextDefault style={styles.label}>usuario@dominio.com</TextDefault>
+        <TextDefault style={styles.label}>{user.email}</TextDefault>
         <View style={styles.divider} />
         <TouchableOpacity
           onPress={() => navigation.navigate('home')}
