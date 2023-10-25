@@ -9,18 +9,21 @@ import {SquareButton} from '../../components/SquareButton';
 
 // FIREBASE
 import {onSnapshot} from 'firebase/firestore';
-import {getQuerySurvey} from '../../services/firestore_service';
+import {getQuerySurvey, pathSurvey} from '../../services/firestore_service';
 import {useSurveys} from '../../modules/SurveysContext';
+import {useAuth} from '../../modules/AuthContext';
 
 const HomePage = ({navigation, route}) => {
   const {surveys, updateSurveys} = useSurveys();
+  const {user} = useAuth();
 
   const renderItem = survey => (
     <SquareButton
       title={survey.name}
       onTap={() =>
         navigation.navigate('actions-search', {
-          id: survey.id,
+          surveyId: survey.id,
+          userId: user.uid,
         })
       }
       image={survey.image}
@@ -43,7 +46,7 @@ const HomePage = ({navigation, route}) => {
   );
 
   const getAllSurveys = async () => {
-    onSnapshot(getQuerySurvey(), querySnapshot => {
+    onSnapshot(getQuerySurvey(user.uid), querySnapshot => {
       const surveys = [];
 
       querySnapshot.forEach(doc => {
@@ -53,7 +56,7 @@ const HomePage = ({navigation, route}) => {
         });
       });
 
-      updateSurveys(surveys);
+      updateSurveys(surveys ?? []);
     });
   };
 
@@ -85,6 +88,7 @@ const HomePage = ({navigation, route}) => {
         onTap={() =>
           navigation.navigate('modify-search', {
             type: 'NEW',
+            userId: user.uid,
           })
         }
       />

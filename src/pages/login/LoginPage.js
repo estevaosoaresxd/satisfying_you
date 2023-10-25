@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {StyleSheet, View} from 'react-native';
 import {Row} from '../../components/Row';
 import {Container} from '../../components/Container';
@@ -9,11 +9,13 @@ import {ButtonDefault} from '../../components/ButtonDefault';
 import {Column} from '../../components/Column';
 import {validateEmail} from '../../shared/utils/validators/email_validator';
 import {AuthLogin} from '../../services/auth_service';
+import {useAuth} from '../../modules/AuthContext';
 
 const LoginPage = ({navigation}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(false);
+  const {user, updateUser, isAuth} = useAuth();
 
   const login = async () => {
     setError(false);
@@ -21,9 +23,9 @@ const LoginPage = ({navigation}) => {
     if (validateEmail(email)) {
       await AuthLogin(email, password)
         .then(userCredential => {
-          const user = userCredential.user;
+          const userInfo = userCredential.user;
 
-          console.log(user.uid);
+          updateUser(userInfo);
 
           navigation.replace('drawer-home');
         })
@@ -39,6 +41,16 @@ const LoginPage = ({navigation}) => {
       setError(true);
     }
   };
+
+  useEffect(() => {
+    var auth = isAuth();
+
+    console.log(auth);
+
+    if (auth != null) {
+      navigation.replace('drawer-home');
+    }
+  }, [user]);
 
   return (
     <Container style={styles.container}>

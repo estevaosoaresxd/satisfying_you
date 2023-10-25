@@ -10,17 +10,17 @@ import {
 } from 'firebase/firestore';
 
 import {firestore} from '../shared/firebase/config';
-
-import {AuthData} from './auth_service';
+import {useAuth} from '../modules/AuthContext';
 
 const surveys = 'surveys';
-const userInfo = AuthData();
 
-const pathSurvey = () => `${surveys}/${userInfo.uid}/${surveys}`;
+const pathSurvey = userId => `${surveys}/${userId}/${surveys}`;
 
-const getQuerySurvey = () => query(collection(firestore, pathSurvey()));
+const getQuerySurvey = userId => {
+  return query(collection(firestore, pathSurvey(userId)));
+};
 
-const addSurvey = async data => {
+const addSurvey = async (data, userId) => {
   const votes = {
     terrible: 0,
     bad: 0,
@@ -31,17 +31,17 @@ const addSurvey = async data => {
 
   data = {...data, ...votes};
 
-  return await addDoc(collection(firestore, pathSurvey()), data);
+  return await addDoc(collection(firestore, pathSurvey(userId)), data);
 };
 
-const updateSurvey = async (docId, newData) => {
-  const document = doc(firestore, pathSurvey(), docId);
+const updateSurvey = async (docId, userId, newData) => {
+  const document = doc(firestore, pathSurvey(userId), docId);
 
   return await updateDoc(document, newData);
 };
 
-const deleteSurvey = async docId => {
-  const document = doc(firestore, pathSurvey(), docId);
+const deleteSurvey = async (docId, userId) => {
+  const document = doc(firestore, pathSurvey(userId), docId);
 
   return await deleteDoc(document);
 };

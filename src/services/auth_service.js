@@ -23,8 +23,4 @@ const AuthForgotPassword = async email => {
   return await sendPasswordResetEmail(auth, email);
 };
 
-const AuthData = () => {
-  return auth.currentUser;
-};
-
-export {AuthLogin, AuthSignOut, AuthForgotPassword, AuthRegister, AuthData};
+export {AuthLogin, AuthSignOut, AuthForgotPassword, AuthRegister};

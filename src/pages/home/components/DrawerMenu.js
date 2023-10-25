@@ -7,14 +7,15 @@ import {TextDefault} from '../../../components/TextDefault';
 import {Container} from '../../../components/Container';
 import {Row} from '../../../components/Row';
 import {Column} from '../../../components/Column';
-import {signOut} from 'firebase/auth';
-import {auth} from '../../../shared/firebase/config';
+import {useAuth} from '../../../modules/AuthContext';
 
 export const DrawerMenu = props => {
   const {navigation} = props;
+  const {signOutAuth} = useAuth();
 
   const signOutUser = async () => {
-    await signOut(auth);
+    signOutAuth();
+
     navigation.replace('login');
   };
 

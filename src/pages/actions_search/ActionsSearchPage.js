@@ -8,9 +8,9 @@ import AddCheckOutline from './../../../assets/svg/add-check-outline.svg';
 import {useSurveys} from '../../modules/SurveysContext';
 
 const ActionsSearchPage = ({navigation, route}) => {
-  const {id} = route.params;
+  const {surveyId, userId} = route.params;
   const {findSurveyById, surveys} = useSurveys();
-  const survey = useMemo(() => findSurveyById(id), [surveys]);
+  const survey = useMemo(() => findSurveyById(surveyId), [surveys]);
 
   useEffect(() => {
     navigation.setOptions({
@@ -32,7 +32,8 @@ const ActionsSearchPage = ({navigation, route}) => {
           onTap={() =>
             navigation.navigate('modify-search', {
               type: 'UPDATE',
-              id,
+              surveyId,
+              userId,
             })
           }
         />
@@ -46,7 +47,8 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleButton={styles.button}
           onTap={() =>
             navigation.navigate('satisfying-collect', {
-              id,
+              surveyId,
+              userId,
             })
           }
         />
@@ -56,7 +58,7 @@ const ActionsSearchPage = ({navigation, route}) => {
           styleIcon={styles.button.icon}
           styleTitle={styles.button.title}
           styleButton={styles.button}
-          onTap={() => navigation.navigate('chart-report', {id})}
+          onTap={() => navigation.navigate('chart-report', {surveyId})}
         />
       </Row>
     </Container>

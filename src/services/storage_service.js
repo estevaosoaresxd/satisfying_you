@@ -1,29 +1,26 @@
 import {ref, uploadBytes, deleteObject, updateMetadata} from 'firebase/storage';
-
-import {AuthData} from './auth_service';
+import {useAuth} from '../modules/AuthContext';
 
 const {storage} = require('../shared/firebase/config');
 
 const images = 'images';
-const userInfo = AuthData();
 
-const saveImage = async (name, blob) => {
-  const path = `${images}/${userInfo.uid}/${name}`;
-  const imageRef = ref(storage, path);
+const getPath = (userId, name) => `${images}/${userId}/${name}`;
+
+const saveImage = async (userId, name, blob) => {
+  const imageRef = ref(storage, getPath(userId, name));
 
   return await uploadBytes(imageRef, blob);
 };
 
-const deleteImage = async name => {
-  const path = `${images}/${userInfo.uid}/${name}`;
-  const imageRef = ref(storage, path);
+const deleteImage = async (userId, name) => {
+  const imageRef = ref(storage, getPath(userId, name));
 
   return await deleteObject(imageRef);
 };
 
-const updateImage = async (name, blob) => {
-  const path = `${images}/${userInfo.uid}/${name}`;
-  const imageRef = ref(storage, path);
+const updateImage = async (userId, name, blob) => {
+  const imageRef = ref(storage, getPath(userId, name));
 
   return await updateMetadata(imageRef, blob);
 };

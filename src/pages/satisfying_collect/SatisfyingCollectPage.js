@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import {useState, useMemo} from 'react';
 import {Dimensions, StyleSheet, View, TouchableOpacity} from 'react-native';
 import {Container} from '../../components/Container';
 import {TextDefault} from '../../components/TextDefault';
@@ -12,10 +12,10 @@ import {useSurveys} from '../../modules/SurveysContext';
 const {width, height} = Dimensions.get('window');
 
 const SatisfyingCollectPage = ({navigation, route}) => {
-  const {id} = route.params;
+  const {surveyId, userId} = route.params;
   const [showMessage, setShowMessage] = useState(false);
   const {findSurveyById, surveys} = useSurveys();
-  const survey = useMemo(() => findSurveyById(id), [surveys]);
+  const survey = useMemo(() => findSurveyById(surveyId), [surveys]);
 
   const onTapCollect = async key => {
     setShowMessage(true);
@@ -34,7 +34,7 @@ const SatisfyingCollectPage = ({navigation, route}) => {
       document[key] += 1;
     }
 
-    await updateSurvey(id, document);
+    await updateSurvey(id, userId, document);
   };
 
   const satisfyingButtons = [

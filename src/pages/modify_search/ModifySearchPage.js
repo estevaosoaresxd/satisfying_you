@@ -34,10 +34,10 @@ const ModifySearchPage = ({navigation, route}) => {
   const [showDate, setShowDate] = useState(false);
   const {findSurveyById} = useSurveys();
 
-  const {type, id} = route.params;
+  const {type, surveyId, userId} = route.params;
 
   const setValuesInInput = () => {
-    const survey = findSurveyById(id);
+    const survey = findSurveyById(surveyId);
 
     if (survey.name) {
       setName(survey.name);
@@ -89,7 +89,9 @@ const ModifySearchPage = ({navigation, route}) => {
 
     if (image) {
       const blob = await getBlobOfUrl(image);
-      const ref = await saveImage(`${name}`, blob).then(async res => res.ref);
+      const ref = await saveImage(userId, `${name}`, blob).then(
+        async res => res.ref,
+      );
       const url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
@@ -97,7 +99,7 @@ const ModifySearchPage = ({navigation, route}) => {
       }
     }
 
-    await addSurvey(document)
+    await addSurvey(document, userId)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');
@@ -115,7 +117,9 @@ const ModifySearchPage = ({navigation, route}) => {
     if (image != img) {
       const blob = await getBlobOfUrl(image);
 
-      var ref = await updateImage(img.name, blob).then(async res => res.ref);
+      var ref = await updateImage(userId, img.name, blob).then(
+        async res => res.ref,
+      );
       var url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
@@ -123,7 +127,7 @@ const ModifySearchPage = ({navigation, route}) => {
       }
     }
 
-    await updateSurvey(survey.id, document)
+    await updateSurvey(surveyId, userId, document)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');
@@ -132,7 +136,7 @@ const ModifySearchPage = ({navigation, route}) => {
   };
 
   const onTapDelete = async () => {
-    await deleteSurvey('Tei2tGtH2YKsW1dqKdxm')
+    await deleteSurvey(surveyId, userId)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');
@@ -185,7 +189,7 @@ const ModifySearchPage = ({navigation, route}) => {
       title: getTitle(),
     });
 
-    if (id) {
+    if (surveyId) {
       setValuesInInput();
     }
   }, [navigation]);
