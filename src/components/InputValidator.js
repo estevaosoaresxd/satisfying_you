@@ -16,6 +16,7 @@ const InputValidator = ({
   Svg,
   image,
   icon,
+  onTap,
   onChange,
   onSubmit,
   onTapIcon,
@@ -62,6 +63,7 @@ const InputValidator = ({
           placeholder={placeholder}
           secureTextEntry={isPassword ?? false}
           placeholderTextColor={'#3F92C5'}
+          onTouchStart={onTap}
         />
         {hasIcon && (
           <TouchableOpacity onPress={onTapIcon}>

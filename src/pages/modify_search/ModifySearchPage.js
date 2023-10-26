@@ -9,7 +9,6 @@ import {TextDefault} from '../../components/TextDefault';
 import {ImagesAssets} from '../../../assets/images/ImagesAssets';
 import {SquareButton} from '../../components/SquareButton';
 import {AlertConfirm} from '../../components/AlertConfirm';
-import DateTimePicker from '@react-native-community/datetimepicker';
 import {
   addSurvey,
   deleteSurvey,
@@ -23,10 +22,11 @@ import {
 } from '../../services/storage_service';
 import {getDownloadURL} from 'firebase/storage';
 import {useSurveys} from '../../modules/SurveysContext';
+import DatePicker from 'react-native-date-picker';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
-  const [calendar, setCalendar] = useState('');
+  const [date, setDate] = useState(new Date());
   const [image, setImage] = useState(null);
   const [errorName, setErrorName] = useState(false);
   const [errorCalendar, setErrorCalendar] = useState(false);
@@ -44,7 +44,7 @@ const ModifySearchPage = ({navigation, route}) => {
     }
 
     if (survey.date) {
-      setCalendar(survey.date);
+      setDate(Date.parse(survey.date));
     }
 
     if (survey.image) {
@@ -84,7 +84,7 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapRegister = async () => {
     const document = {
       name: name,
-      date: new Date().toUTCString(),
+      date: date,
     };
 
     if (image) {
@@ -110,7 +110,7 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapUpdate = async () => {
     const document = {
       name: name,
-      date: new Date().toUTCString(),
+      date: date,
       image: image,
     };
 
@@ -155,7 +155,7 @@ const ModifySearchPage = ({navigation, route}) => {
       isValid = false;
     }
 
-    if (!calendar.trim()) {
+    if (!date.trim()) {
       setErrorCalendar(true);
       isValid = false;
     }
@@ -177,11 +177,6 @@ const ModifySearchPage = ({navigation, route}) => {
         }
       })
       .catch(e => console.log('error', e));
-  };
-
-  const onChangeDate = (ev, date) => {
-    // setCalendar(date);
-    setShowDate(false);
   };
 
   useEffect(() => {
@@ -212,8 +207,9 @@ const ModifySearchPage = ({navigation, route}) => {
       <Column>
         <InputValidator
           text="Data"
-          value={calendar}
-          onChange={setCalendar}
+          value={date.toDateString()}
+          onChange={setDate}
+          onTap={() => setShowDate(true)}
           typeIcon="img"
           hasIcon={true}
           image={ImagesAssets.calendar}
@@ -223,17 +219,19 @@ const ModifySearchPage = ({navigation, route}) => {
           <TextDefault style={styles.error}>Preencha a data</TextDefault>
         )}
       </Column>
-      {showDate && (
-        <DateTimePicker
-          value={new Date()}
-          positiveButton={{label: 'CONFIRMAR', textColor: 'green'}}
-          negativeButton={{label: 'CANCELAR', textColor: 'red'}}
-          mode="calendar"
-          onChange={(ev, date) => onChangeDate(ev, date)}
-          dateFormat="day month year"
-          locale="pt-BR"
-        />
-      )}
+
+      <DatePicker
+        modal
+        open={showDate}
+        date={date}
+        onConfirm={date => {
+          setShowDate(false);
+          setDate(date);
+        }}
+        onCancel={() => {
+          setShowDate(false);
+        }}
+      />
 
       <ImageButton
         text="Imagem"
