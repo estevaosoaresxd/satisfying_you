@@ -53,7 +53,7 @@ const InputValidator = ({
   return (
     <View>
       <TextDefault style={{...styles.text, ...styleText}}>{text}</TextDefault>
-      <Row style={styles.row}>
+      <Row onTap={onTap} style={styles.row}>
         <TextInput
           value={value}
           style={{...styles.row.input, ...styleInput}}
@@ -63,7 +63,7 @@ const InputValidator = ({
           placeholder={placeholder}
           secureTextEntry={isPassword ?? false}
           placeholderTextColor={'#3F92C5'}
-          onTouchStart={onTap}
+          editable={onTap != undefined ? false : true}
         />
         {hasIcon && (
           <TouchableOpacity onPress={onTapIcon}>

@@ -23,10 +23,11 @@ import {
 import {getDownloadURL} from 'firebase/storage';
 import {useSurveys} from '../../modules/SurveysContext';
 import DatePicker from 'react-native-date-picker';
+import {dateFormat} from '../../shared/utils/date_format';
 
 const ModifySearchPage = ({navigation, route}) => {
   const [name, setName] = useState('');
-  const [date, setDate] = useState(new Date());
+  const [date, setDate] = useState(null);
   const [image, setImage] = useState(null);
   const [errorName, setErrorName] = useState(false);
   const [errorCalendar, setErrorCalendar] = useState(false);
@@ -44,7 +45,9 @@ const ModifySearchPage = ({navigation, route}) => {
     }
 
     if (survey.date) {
-      setDate(Date.parse(survey.date));
+      let date = new Date(survey.date);
+
+      setDate(date);
     }
 
     if (survey.image) {
@@ -84,7 +87,7 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapRegister = async () => {
     const document = {
       name: name,
-      date: date,
+      date: date.toISOString(),
     };
 
     if (image) {
@@ -110,7 +113,7 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapUpdate = async () => {
     const document = {
       name: name,
-      date: date,
+      date: date.toISOString(),
       image: image,
     };
 
@@ -155,7 +158,7 @@ const ModifySearchPage = ({navigation, route}) => {
       isValid = false;
     }
 
-    if (!date.trim()) {
+    if (!date) {
       setErrorCalendar(true);
       isValid = false;
     }
@@ -207,8 +210,7 @@ const ModifySearchPage = ({navigation, route}) => {
       <Column>
         <InputValidator
           text="Data"
-          value={date.toDateString()}
-          onChange={setDate}
+          value={date != undefined ? dateFormat(date) : ''}
           onTap={() => setShowDate(true)}
           typeIcon="img"
           hasIcon={true}
@@ -222,8 +224,9 @@ const ModifySearchPage = ({navigation, route}) => {
 
       <DatePicker
         modal
+        mode="date"
         open={showDate}
-        date={date}
+        date={date ?? new Date()}
         onConfirm={date => {
           setShowDate(false);
           setDate(date);

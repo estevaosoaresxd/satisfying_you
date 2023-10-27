@@ -12,6 +12,7 @@ import {onSnapshot} from 'firebase/firestore';
 import {getQuerySurvey, pathSurvey} from '../../services/firestore_service';
 import {useSurveys} from '../../modules/SurveysContext';
 import {useAuth} from '../../modules/AuthContext';
+import {dateFormat} from '../../shared/utils/date_format';
 
 const HomePage = ({navigation, route}) => {
   const {surveys, updateSurveys} = useSurveys();
@@ -28,7 +29,7 @@ const HomePage = ({navigation, route}) => {
       }
       image={survey.image}
       typeIcon="img"
-      description={survey.date}
+      description={dateFormat(new Date(survey.date))}
       styleButton={styles.flatlist.button}
       styleIcon={{...styles.flatlist.button.icon}}
       styleTitle={styles.flatlist.button.title}

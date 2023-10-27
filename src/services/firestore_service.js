@@ -10,7 +10,6 @@ import {
 } from 'firebase/firestore';
 
 import {firestore} from '../shared/firebase/config';
-import {useAuth} from '../modules/AuthContext';
 
 const surveys = 'surveys';
 

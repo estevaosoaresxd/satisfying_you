@@ -1,7 +1,11 @@
 import {StyleSheet, View} from 'react-native';
 
-const Row = ({children, style}) => {
-  return <View style={{...styles.row, ...style}}>{children}</View>;
+const Row = ({children, onTap, style}) => {
+  return (
+    <View onTouchStart={onTap} style={{...styles.row, ...style}}>
+      {children}
+    </View>
+  );
 };
 
 const styles = StyleSheet.create({
