@@ -20,7 +20,7 @@ export const DrawerMenu = ({navigation}) => {
 
   return (
     <Container style={styles.container}>
-      <Column>
+      <Column style={styles.column}>
         <TextDefault style={styles.label}>{user.email}</TextDefault>
         <View style={styles.divider} />
         <TouchableOpacity
@@ -51,6 +51,7 @@ const styles = StyleSheet.create({
     alignItems: 'flex-start',
     padding: 20,
   },
+  column: {flex: 1, alignItems: 'stretch', width: '100%'},
   row: {justifyContent: 'start'},
   button: {
     alignSelf: 'stretch',
@@ -64,6 +65,7 @@ const styles = StyleSheet.create({
   label: {
     color: '#ffffff',
     fontSize: 24,
+    width: 'auto',
   },
   icon: {
     color: '#ffffff',

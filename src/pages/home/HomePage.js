@@ -1,4 +1,4 @@
-import {useEffect} from 'react';
+import {useEffect, useMemo, useState} from 'react';
 import {StyleSheet, View, FlatList} from 'react-native';
 
 // COMPONENTS
@@ -15,8 +15,27 @@ import {useAuth} from '../../modules/AuthContext';
 import {dateFormat} from '../../shared/utils/date_format';
 
 const HomePage = ({navigation, route}) => {
+  const [searchQuery, setSearchQuery] = useState('');
+
   const {surveys, updateSurveys} = useSurveys();
   const {user} = useAuth();
+
+  const filterData = (query, data) => {
+    if (!query) {
+      return data;
+    } else {
+      let filtered = data.filter(survey =>
+        survey.name.toLowerCase().includes(query),
+      );
+
+      return filtered;
+    }
+  };
+
+  const dataFiltered = useMemo(
+    () => filterData(searchQuery, surveys),
+    [searchQuery, surveys],
+  );
 
   const renderItem = survey => (
     <SquareButton
@@ -70,11 +89,13 @@ const HomePage = ({navigation, route}) => {
       <InputSearch
         placeholder="Insira o termo de busca..."
         styleRow={styles.inputSearch}
+        onChange={setSearchQuery}
+        value={searchQuery}
       />
 
       <FlatList
         horizontal={true}
-        data={surveys}
+        data={dataFiltered}
         renderItem={({item}) => renderItem(item)}
         ItemSeparatorComponent={() => separator}
         style={styles.flatlist}

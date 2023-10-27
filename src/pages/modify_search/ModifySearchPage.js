@@ -16,6 +16,7 @@ import {
 } from '../../services/firestore_service';
 import {openCamera, openImagePicker} from '../../shared/utils/image_picker';
 import {
+  deleteImage,
   getBlobOfUrl,
   saveImage,
   updateImage,
@@ -26,6 +27,8 @@ import DatePicker from 'react-native-date-picker';
 import {dateFormat} from '../../shared/utils/date_format';
 
 const ModifySearchPage = ({navigation, route}) => {
+  const {type, surveyId, userId} = route.params;
+
   const [name, setName] = useState('');
   const [date, setDate] = useState(null);
   const [image, setImage] = useState(null);
@@ -35,23 +38,21 @@ const ModifySearchPage = ({navigation, route}) => {
   const [showDate, setShowDate] = useState(false);
   const {findSurveyById} = useSurveys();
 
-  const {type, surveyId, userId} = route.params;
+  const oldSurvey = findSurveyById(surveyId);
 
   const setValuesInInput = () => {
-    const survey = findSurveyById(surveyId);
-
-    if (survey.name) {
-      setName(survey.name);
+    if (oldSurvey.name) {
+      setName(oldSurvey.name);
     }
 
-    if (survey.date) {
-      let date = new Date(survey.date);
+    if (oldSurvey.date) {
+      let date = new Date(oldSurvey.date);
 
       setDate(date);
     }
 
-    if (survey.image) {
-      setImage(survey.image);
+    if (oldSurvey.image) {
+      setImage(oldSurvey.image);
     }
   };
 
@@ -92,7 +93,7 @@ const ModifySearchPage = ({navigation, route}) => {
 
     if (image) {
       const blob = await getBlobOfUrl(image);
-      const ref = await saveImage(userId, `${name}`, blob).then(
+      const ref = await saveImage(userId, name, blob).then(
         async res => res.ref,
       );
       const url = await getDownloadURL(ref).then(url => url);
@@ -117,12 +118,15 @@ const ModifySearchPage = ({navigation, route}) => {
       image: image,
     };
 
-    if (image != img) {
+    if (image != oldSurvey.image) {
+      await deleteImage(userId, oldSurvey.name);
+
       const blob = await getBlobOfUrl(image);
 
-      var ref = await updateImage(userId, img.name, blob).then(
+      const ref = await saveImage(userId, name, blob).then(
         async res => res.ref,
       );
+
       var url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
@@ -130,15 +134,14 @@ const ModifySearchPage = ({navigation, route}) => {
       }
     }
 
-    await updateSurvey(surveyId, userId, document)
-      .then(e => {
-        console.log(e, 'sucess');
-        navigation.navigate('home');
-      })
-      .catch(e => console.log(e, 'error'));
+    await updateSurvey(surveyId, userId, document).then(e => {
+      navigation.navigate('home');
+    });
   };
 
   const onTapDelete = async () => {
+    await deleteImage(userId, oldSurvey.name);
+
     await deleteSurvey(surveyId, userId)
       .then(e => {
         console.log(e, 'sucess');
