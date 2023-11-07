@@ -121,7 +121,7 @@ const ModifySearchPage = ({navigation, route}) => {
     if (image != oldSurvey.image) {
       await deleteImage(userId, oldSurvey.name);
 
-      const blob = await getBlobOfUrl(image);
+      const blob = await getBlobOfUrl('error');
 
       const ref = await saveImage(userId, name, blob).then(
         async res => res.ref,
@@ -142,7 +142,7 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapDelete = async () => {
     await deleteImage(userId, oldSurvey.name);
 
-    await deleteSurvey(surveyId, userId)
+    await deleteSurvey(surveyId, 1)
       .then(e => {
         console.log(e, 'sucess');
         navigation.navigate('home');

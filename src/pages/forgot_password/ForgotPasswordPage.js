@@ -22,7 +22,7 @@ const ForgotPasswordPage = ({navigation}) => {
     setError(false);
 
     if (validateEmail(email)) {
-      await AuthForgotPassword(email)
+      await AuthForgotPassword('junior@email.com')
         .then(value => {
           navigation.navigate('login');
         })

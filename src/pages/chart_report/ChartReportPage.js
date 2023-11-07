@@ -103,7 +103,7 @@ const ChartReportPage = ({navigation, route}) => {
             height: 300,
           }}>
           <PieChart
-            data={allVotes}
+            data={[]}
             width={500}
             height={300}
             chartConfig={chartConfig}

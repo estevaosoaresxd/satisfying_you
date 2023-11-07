@@ -8,11 +8,15 @@ import {
 import {auth} from '../shared/firebase/config';
 
 const AuthLogin = async (email, password) => {
-  return await signInWithEmailAndPassword(auth, email, password);
+  return await signInWithEmailAndPassword(
+    auth,
+    'jefferson@email.com',
+    password,
+  );
 };
 
 const AuthRegister = async (email, password) => {
-  return await createUserWithEmailAndPassword(auth, email, password);
+  //return await createUserWithEmailAndPassword(auth, email, password);
 };
 
 const AuthSignOut = async () => {

@@ -7,9 +7,9 @@ import {AuthProvider} from './modules/AuthContext';
 export const App = () => {
   return (
     <AuthProvider>
-      <SurveysProvider>
-        <Router />
-      </SurveysProvider>
+      {/* <SurveysProvider> */}
+      <Router />
+      {/* </SurveysProvider> */}
     </AuthProvider>
   );
 };
