@@ -142,12 +142,9 @@ const ModifySearchPage = ({navigation, route}) => {
   const onTapDelete = async () => {
     await deleteImage(userId, oldSurvey.name);
 
-    await deleteSurvey(surveyId, userId)
-      .then(e => {
-        console.log(e, 'sucess');
-        navigation.navigate('home');
-      })
-      .catch(e => console.log(e, 'error'));
+    await deleteSurvey(surveyId, userId).then(e => {
+      navigation.navigate('home');
+    });
   };
 
   const onTapButton = async () => {
@@ -175,7 +172,7 @@ const ModifySearchPage = ({navigation, route}) => {
     await openCamera()
       .then(res => {
         if (res.assets && res.assets.length > 0) {
-          let {fileName, type, originalPath, uri} = res.assets[0];
+          let {uri} = res.assets[0];
 
           setImage(uri);
         } else if (res.didCancel) {
