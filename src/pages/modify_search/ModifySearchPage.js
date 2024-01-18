@@ -91,17 +91,24 @@ const ModifySearchPage = ({navigation, route}) => {
       date: date.toISOString(),
     };
 
+    console.log(image);
+
     if (image) {
       const blob = await getBlobOfUrl(image);
       const ref = await saveImage(userId, name, blob).then(
         async res => res.ref,
       );
+
+      console.log(ref);
+
       const url = await getDownloadURL(ref).then(url => url);
 
       if (url) {
         document['image'] = url;
       }
     }
+
+    console.log(document);
 
     await addSurvey(document, userId)
       .then(e => {
